@@ -14,8 +14,8 @@
 
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
+<jsp:include page="../head.jsp"/>
+<jsp:include page="../logo.jsp"/>
 <form action="/ServletController" method="post" charset="UTF-8">
     Введите имя услуги: <Input type="Text" name="name" value=""/>${requestScope.map.name}
     <br>

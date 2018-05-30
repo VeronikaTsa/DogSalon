@@ -49,11 +49,9 @@ import java.util.List;
 import static com.tsarova.salon.content.CommandContent.ResponseType.FORWARD;
 import static com.tsarova.salon.content.CommandContent.ResponseType.INCLUDE;
 import static com.tsarova.salon.content.CommandContent.ResponseType.REDIRECT;
-@MultipartConfig(fileSizeThreshold = 1024 * 1024
-        , maxFileSize = 1024 * 1024 * 5 * 5)
 @WebServlet("/ServletController")
 public class ServletController extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -79,6 +77,11 @@ public class ServletController extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+
+
+        //System.out.println(request.getServletContext().getRealPath("/"));
+        //System.out.println(request.getRequestDispatcher("jsp/head.jsp"));
+
 
             try {
                 RequestContent requestContent = new RequestContent();

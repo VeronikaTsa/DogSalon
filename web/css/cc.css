@@ -30,7 +30,6 @@ a#close                    { text-decoration:none; }
    VOTING
 ----------------------------------------- */
 
-#vote_box                  { background-image:url("../images/vote.png"); background-repeat:no-repeat; background-position:94% 51%; padding:20px 0 30px; height:auto; width:100%; float:left;}
 #vote_box h2               { font-size:48px; color:#FFF;  line-height:60px; font-weight:700; letter-spacing:2px;}
 .ingredient_one, .ingredient_two  { width:auto; min-width:220px!important; padding:0 100px 5px; border-bottom:4px solid #FFF; text-align:center;  font-size:22px; font-weight:400; font-family:Helvetica, Arial, "Montserrat", sans-serif;}
 
@@ -76,23 +75,14 @@ figure#logoset        	   { color:#222!important; text-align:center; margin:60px
    TUMBLR POSTS
 ----------------------------------------- */
 
-.like_reblog               { display: none; }
-.image_post:hover .like_reblog   { display: block!important; }
-.post figure               { display: inline-block; margin:0 5px; }
-figure.reblog              { background-image:url(../images/reblog.png); background-repeat:no-repeat; background-position:center center; height:32px; width:50px; }
-
-figure.like:hover          { background-image:url(../images/like-red.png); }
-figure.reblog:hover        { background-image:url(../images/reblog-red.png); }
-
 .permalink-image_post      { max-width:490px; margin:0 auto;  }
 .permalink-image_post  img { width:100%; padding: 20px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; display: block; background-color: #FFF;}
-.permalink-caption_post    { margin:40px auto; text-align:center; } .permalink-caption_post p { font-family:'Crimson Text'; margin:5px 0; }
-
-.my-like                   { background-image: url(../images/like.png) !important; background-repeat:no-repeat;
-                             background-position:center center; height:32px; width:50px;cursor:pointer; display:inline-block;  }
-
-.my-liked, .my-like:hover  { background-image: url(../images/like-red.png) !important; background-repeat:no-repeat;
-                             background-position:center center; height:32px; width:50px; display:inline-block; }
+.permalink-caption_post    {
+    margin:40px auto;
+    text-align:center; }
+.permalink-caption_post p {
+    font-family:'Crimson Text';
+    margin:5px 0; }
 
 
 .index-caption p a { border-bottom:1px solid #222; padding-bottom:2px; }
@@ -347,3 +337,30 @@ a.feedback__author:hover{
     transition: all .5s ease;
 }
 
+.error-message {
+    font-family:'Crimson Text';
+    margin:5px 0;
+}
+
+.no-spinners {
+    -moz-appearance:textfield;
+}
+
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.user-info-wrap {
+    margin: 0 auto;
+    align-items: center;
+}
+
+.user-info p {
+    max-width: 750px;
+    margin: 0 auto;
+    margin-top: 20px;
+    position: relative;
+    padding: 10px 20px;
+}

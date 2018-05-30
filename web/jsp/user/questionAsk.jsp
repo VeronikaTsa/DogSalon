@@ -14,8 +14,8 @@
     <title>Ask question</title>
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
+<jsp:include page="../head.jsp"/>
+<jsp:include page="../logo.jsp"/>
 <form action="/ServletController" method="post" charset="UTF-8">
     <Input type="Text" name="question" value="" width="100px" height="50px"/>
     <Input type="submit" value="Задать вопрос"/>

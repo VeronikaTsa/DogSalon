@@ -24,9 +24,6 @@
 </head>
 <body>
 
-
-
-
 <jsp:include page="jsp/head.jsp"/>
 
 <div id="wrapper">
@@ -36,7 +33,9 @@
     <jsp:include page="/ServletController" flush="true">
       <jsp:param name="command" value="service" />
     </jsp:include>
-</section><div class="clear"></div><section class="categories">
+</section>
+  <div class="clear"></div>
+  <section class="categories">
   <h1>VIEW BY</h1>
   <a href="/tagged/entree">ENTRÉES</a>
   <a href="/tagged/main">MAINS</a>

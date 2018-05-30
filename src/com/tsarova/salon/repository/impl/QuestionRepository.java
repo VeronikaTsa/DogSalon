@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionRepository implements Repository<Question>{
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public boolean add(Question question) throws RepositoryException {

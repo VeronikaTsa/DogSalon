@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Veronichka
@@ -10,36 +11,41 @@
 <head>
     <title>${sessionScope.someone.login}</title>
     <link rel="stylesheet" href="/css/cc.css">
+    <style>
+        .user-info p {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="head.jsp"/>
 <jsp:include page="logo.jsp"/>
-
-login: ${sessionScope.someone.login}
-<br>
-<br>
-
-email: ${sessionScope.someone.email}
-<br>
-<br>
-picture:  ${sessionScope.someone.userContent.picture}
-<br>
-<br>
-first name: ${sessionScope.someone.userContent.firstName}
-<br>
-<br>
-last name: ${sessionScope.someone.userContent.lastName}
-<br>
-<br>
-telephone: ${sessionScope.someone.userContent.telephone}
-<br>
-<br>
-birthday: ${sessionScope.someone.userContent.birthday}
-<br>
-<br>
-sex:  ${sessionScope.someone.userContent.sex}
-<br>
-<br>
-<br>
+<div class="user-info-wrap">
+    <form>
+        <div class="user-info">
+            <p>login: <c:out value="${sessionScope.someone.login}"/></p>
+            <p>email: <c:out value="${sessionScope.someone.email}"/></p>
+            <p>picture:  <c:out value="${sessionScope.someone.userContent.picture}"/></p>
+            <c:if test="${not empty sessionScope.someone.userContent}">
+                <c:if test="${not empty sessionScope.someone.userContent.firstName}">
+                    <p>first name: <c:out value="${sessionScope.someone.userContent.firstName}"/></p>
+                </c:if>
+                <c:if test="${not empty sessionScope.someone.userContent.lastName}">
+                    <p>last name: <c:out value="${sessionScope.someone.userContent.lastName}"/></p>
+                </c:if>
+                <c:if test="${not empty sessionScope.someone.userContent.telephone}">
+                    <p>telephone: <c:out value="${sessionScope.someone.userContent.telephone}"/></p>
+                </c:if>
+                <c:if test="${not empty sessionScope.someone.userContent.birthday}">
+                    <p>birthday: <c:out value="${sessionScope.someone.userContent.birthday}"/></p>
+                </c:if>
+                <c:if test="${not empty sessionScope.someone.userContent.sex}">
+                    <p>sex: <c:out value="${sessionScope.someone.userContent.sex}"/></p>
+                </c:if>
+            </c:if>
+        </div>
+    </form>
+</div>
 </body>
 </html>

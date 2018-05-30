@@ -18,6 +18,13 @@ public class User implements Entity {
     public User() {
     }
 
+    public User(Long userId, String email, String login, String password) {
+        this.userId = userId;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+    }
+
     public User(String email, String password, String login) {
         this.email = email;
         this.login = login;
@@ -46,6 +53,14 @@ public class User implements Entity {
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public User(Long userId, String email, String login, String password, UserContent userContent) {
+        this.userId = userId;
+        this.email = email;
+        this.login = login;
+        this.userContent = userContent;
+        this.password = password;
     }
 
     public User(String email, String password) {

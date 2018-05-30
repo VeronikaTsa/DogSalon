@@ -53,24 +53,24 @@
             <a href="/jsp/feedback/feedback.jsp">${feedbacks}</a>
         </li>
         <li>
-            <a href="/jsp/questionAnswer.jsp">${questions}</a>
+            <a href="/jsp/question/questionAnswer.jsp">${questions}</a>
 
         </li>
         <c:if test="${sessionScope.user.role.getValue().equals('administrator')}">
             <li>
-                <a href="/jsp/adminPanel.jsp">${adminPanel}</a>
+                <a href="/jsp/admin/adminPanel.jsp">${adminPanel}</a>
             </li>
         </c:if>
         <c:if test="${sessionScope.user.role.getValue().equals('expert')}">
             <li>
-                <a href="/jsp/expertPanel.jsp">${expertPanel}</a>
+                <a href="/jsp/expert/expertPanel.jsp">${expertPanel}</a>
             </li>
         </c:if>
 
         <c:choose>
             <c:when test="${not empty user}">
                 <li>
-                    <a href="/jsp/userInfo.jsp"> ${me} </a>
+                    <a href="/jsp/user/userInfo.jsp"> ${me} </a>
                 </li>
                 <li>
                     <a href="/ServletController?command=logout">${logout}</a>

@@ -35,13 +35,13 @@
     </style>
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
+<jsp:include page="../head.jsp"/>
+<jsp:include page="../logo.jsp"/>
 <c:set var="user" value="${sessionScope.user}"/>
 
 <c:if test="${not empty user}">
     <c:if test="${sessionScope.user.role.getValue().equals('user')}">
-        <Input type="button" onclick="location.href='/jsp/questionAsk.jsp'" value="Задать вопрос специалисту" />
+        <Input type="button" onclick="location.href='/jsp/user/questionAsk.jsp'" value="Задать вопрос специалисту" />
     </c:if>
 
 </c:if>

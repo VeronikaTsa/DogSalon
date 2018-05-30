@@ -8,8 +8,13 @@ import com.tsarova.salon.exception.CommandException;
 import com.tsarova.salon.exception.ReceiverException;
 import com.tsarova.salon.receiver.UserReceiver;
 import com.tsarova.salon.resource.page.PageResourceManager;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SignUpExpertCommand implements Command{
+    private static Logger logger = LogManager.getLogger();
+
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {
         CommandContent commandContent;
@@ -25,7 +30,8 @@ public class SignUpExpertCommand implements Command{
             }
 
         } catch (ReceiverException e) {
-            e.printStackTrace();
+            logger.catching(Level.ERROR, e);
+            throw new CommandException();
         }
         requestContent.setAttribute("signUpExpertSuccess", "специалист не был зареган");
 

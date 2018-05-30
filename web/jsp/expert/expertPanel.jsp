@@ -23,12 +23,13 @@
     <title>${expertPanel}</title>
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
-
-<form action="/ServletController" method="post">
-    <Input type="submit" value="${questionNotAnswered}"/>
-    <input type="hidden" name="command" value="question" />
-</form>
+<jsp:include page="../head.jsp"/>
+<jsp:include page="../logo.jsp"/>
+<div style="margin-left: 650px">
+    <form action="/ServletController" method="post">
+        <Input type="submit" value="${questionNotAnswered}"/>
+        <input type="hidden" name="command" value="question" />
+    </form>
+</div>
 </body>
 </html>

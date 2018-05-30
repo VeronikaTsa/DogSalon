@@ -22,7 +22,9 @@ public enum CommandEnum {
     QUESTIONDELETE(new QuestionDeleteCommand()),
     SERVICE(new ServiceCommand()),
     SERVICEADD(new ServiceAddCommand()),
-    SERVICEDELETE(new ServiceDeleteCommand());
+    SERVICEDELETE(new ServiceDeleteCommand()),
+    SERVICEUPDATE(new ServiceUpdateCommand()),
+    USERUPDATE(new UserUpdateCommand());
 
 
     private Command command;

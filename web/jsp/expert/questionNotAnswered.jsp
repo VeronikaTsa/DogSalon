@@ -36,8 +36,9 @@
         </style>
     </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
+<jsp:include page="../head.jsp"/>
+<jsp:include page="../logo.jsp"/>
+${requestScope.answerAddSuccess}
 <c:set var="list" value="${requestScope.questionNotAnsweredList}"/>
 
 
@@ -65,7 +66,7 @@
             </form>
 
 
-            <a class="link" href="/jsp/answerAdd.jsp?questionContent=${element.content}&questionCreateTime=${element.createTime}&questionAuthor=${element.userLogin}&questionId=${element.id}">Ответить</a>
+            <a class="link" href="/jsp/expert/answerAdd.jsp?questionContent=${element.content}&questionCreateTime=${element.createTime}&questionAuthor=${element.userLogin}&questionId=${element.id}">Ответить</a>
 
             <br>
         </c:if>

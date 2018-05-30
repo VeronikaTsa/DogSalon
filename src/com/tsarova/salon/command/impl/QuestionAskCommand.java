@@ -9,8 +9,13 @@ import com.tsarova.salon.exception.ReceiverException;
 import com.tsarova.salon.receiver.FeedbackReceiver;
 import com.tsarova.salon.receiver.QuestionReceiver;
 import com.tsarova.salon.resource.page.PageResourceManager;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class QuestionAskCommand implements Command {
+    private static Logger logger = LogManager.getLogger();
+
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {
 
@@ -24,8 +29,8 @@ public class QuestionAskCommand implements Command {
                 requestContent.setAttribute("questionAskSuccess", "Вопрос был отправлен");
             }
         } catch (ReceiverException e) {
-            e.printStackTrace();
-        }
+            logger.catching(Level.ERROR, e);
+            throw new CommandException();        }
 
         return commandContent;
     }

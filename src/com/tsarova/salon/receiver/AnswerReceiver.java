@@ -8,8 +8,13 @@ import com.tsarova.salon.exception.RepositoryException;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.impl.AnswerRepository;
 import com.tsarova.salon.repository.impl.FeedbackRepository;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AnswerReceiver {
+    private static Logger logger = LogManager.getLogger();
+
     public static boolean addAnswer(Long questionId, String answerContent, User user) throws ReceiverException {
         if(answerContent != null){
             Answer answer = new Answer(user.getLogin(), answerContent, questionId, user.getUserId());
@@ -19,7 +24,8 @@ public class AnswerReceiver {
                     return true;
                 }
             } catch (RepositoryException e) {
-                e.printStackTrace();
+                logger.catching(Level.ERROR, e);
+                throw new ReceiverException(e);
             }
         }
         return false;

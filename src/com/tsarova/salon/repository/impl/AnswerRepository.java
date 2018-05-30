@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AnswerRepository implements Repository<Answer> {
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public boolean add(Answer answer) throws RepositoryException {

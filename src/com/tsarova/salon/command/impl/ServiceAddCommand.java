@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 public class ServiceAddCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {

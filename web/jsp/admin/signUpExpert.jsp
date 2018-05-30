@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="/css/cc.css">
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
+<jsp:include page="../head.jsp"/>
+<jsp:include page="../logo.jsp"/>
 
 <div style="margin-left: 600px">
 <form action="/ServletController" method="post" charset="UTF-8">

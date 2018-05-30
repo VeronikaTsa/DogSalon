@@ -18,7 +18,7 @@ import java.sql.*;
 import java.util.List;
 
 public class UserRepository implements Repository<User> {
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     private Connection connectionR;
 
@@ -33,7 +33,56 @@ public class UserRepository implements Repository<User> {
     }
 
     @Override
-    public boolean update(User user) {
+    public boolean update(User user) throws RepositoryException {
+        final String SQL_UPDATE_USER = SQLQuery.UPDATE_USER;
+        final String SQL_UPDATE_USER_INFO = SQLQuery.UPDATE_USER_INFO;
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = ConnectionPoolImpl.getInstance().getConnection();
+
+            statement = connection.prepareStatement(SQL_UPDATE_USER);
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, String.valueOf(user.getUserId()));
+
+            if(statement.executeUpdate()>0){
+                if(user.getUserContent() != null){
+                    PreparedStatement statementUserInfo;
+                    statementUserInfo = connection.prepareStatement(SQL_UPDATE_USER_INFO);
+                    statementUserInfo.setString(1, user.getUserContent().getFirstName());
+                    statementUserInfo.setString(2, user.getUserContent().getLastName());
+                    statementUserInfo.setString(3, user.getUserContent().getTelephone());
+                    statementUserInfo.setString(6, String.valueOf(user.getUserId()));
+                    if(user.getUserContent().getSex() != null){
+                        statementUserInfo.setString(5, String.valueOf(user.getUserContent().getSex()));
+                    } else {
+                        statementUserInfo.setString(5, null);
+                    }
+                    if(user.getUserContent().getBirthday() != null){
+                        statementUserInfo.setString(4, String.valueOf(user.getUserContent().getBirthday()));
+                    } else {
+                        statementUserInfo.setString(4, null);
+                    }
+
+                    if(statementUserInfo.executeUpdate()>0){
+                        return true;//??????????????????
+                    }
+                }
+                return true;
+            }
+        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+            logger.catching(Level.ERROR, e);
+            throw new RepositoryException(e);
+        } finally {
+            if(connection != null)
+            {
+                ConnectionPoolImpl.getInstance().closeConnection(connection);
+            }
+        }
         return false;
     }
 
@@ -88,14 +137,14 @@ public class UserRepository implements Repository<User> {
 
                     user.setUserContent(userContent);
                 }
-
+                ConnectionPoolImpl.getInstance().closeConnection(connection);
                 return user;
             }
         } catch (SQLException | NullPointerException | ConnectionPoolException e) {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            ConnectionPoolImpl.getInstance().closeConnection(connection);//тоже в трай? если подключеня нет, попробует закрыть на налле
+            //тоже в трай? если подключеня нет, попробует закрыть на налле
         }
         return null;        //????????????????
     }

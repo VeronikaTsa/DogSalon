@@ -18,19 +18,17 @@
 <c:if test="${not empty list}">
     <c:forEach items="${list}" var="element">
         <div class="post">
-            <!-- PHOTO POST -->
             <div class="image_post">
-                <a href="/jsp/serviceInfo.jsp?id=${element.id}&name=${element.name}&content=${element.content}&price=${element.price}&picture=${element.picture}">
+                <a href="/jsp/service/serviceInfo.jsp?id=${element.id}&name=${element.name}&content=${element.content}&price=${element.price}&picture=${element.picture}">
                     <img src="/resource/img/service/${element.picture}">
                 </a>
             </div>
-
                 <div class="caption_post">
                     <div class="index-caption">
                         <p>
-                        <span>
-                            <a href="/jsp/serviceInfo.jsp?id=${element.id}&name=${element.name}&content=${element.content}&price=${element.price}&picture=${element.picture}">${element.name}<br></a>
-                        </span>
+                            <span>
+                                <a href="/jsp/service/serviceInfo.jsp?id=${element.id}&name=${element.name}&content=${element.content}&price=${element.price}&picture=${element.picture}">${element.name}<br></a>
+                            </span>
                         </p>
                     </div>
                     <p class="date"> ${element.price}</p>

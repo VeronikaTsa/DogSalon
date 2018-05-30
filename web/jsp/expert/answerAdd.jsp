@@ -25,8 +25,8 @@
     </style>
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
+<jsp:include page="../head.jsp"/>
+<jsp:include page="../logo.jsp"/>
 <a href="/ServletController?command=userInfo&userLogin=${param.questionAuthor}"
    class="user">
     <c:out value="${param.questionAuthor}"/>
@@ -51,6 +51,5 @@ ${param.questionCreateTime}
 
 <br>
 ${requestScope.answerAddSuccess}
-<br>
 </body>
 </html>

@@ -12,6 +12,12 @@ public class Service implements Entity {
     private double price;
     private boolean status;
 
+
+    public Service(Long id, String picture) {
+        this.id = id;
+        this.picture = picture;
+    }
+
     public Service(Long id, String name, String content, double price) {
         this.id = id;
         this.name = name;

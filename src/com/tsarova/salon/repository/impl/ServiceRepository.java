@@ -73,6 +73,32 @@ public class ServiceRepository implements Repository<Service> {
 
     @Override
     public boolean update(Service service) throws RepositoryException {
+        final String SQL_UPDATE_SERVICE = SQLQuery.UPDATE_SERVICE;
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = ConnectionPoolImpl.getInstance().getConnection();
+
+            statement = connection.prepareStatement(SQL_UPDATE_SERVICE);
+            statement.setString(1, service.getName());
+            statement.setString(2, service.getContent());
+            statement.setString(3, service.getPicture());
+            statement.setString(4, String.valueOf(service.getPrice()));
+            statement.setString(5, service.getId().toString());
+
+            if(statement.executeUpdate()>0){
+                return true;
+            }
+        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+            logger.catching(Level.ERROR, e);
+            throw new RepositoryException(e);
+        } finally {
+            if(connection != null)
+            {
+                ConnectionPoolImpl.getInstance().closeConnection(connection);
+            }
+        }
         return false;
     }
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackRepository implements Repository<Feedback> {
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
 
     @Override

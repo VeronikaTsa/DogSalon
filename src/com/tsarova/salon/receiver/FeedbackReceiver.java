@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackReceiver {
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     public static boolean addFeedback(String feedbackContent, User user) throws ReceiverException {
         if(!feedbackContent.isEmpty()){

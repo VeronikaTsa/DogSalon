@@ -24,15 +24,14 @@
     <title>${adminPanel}</title>
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
 
-<Input type="button" onclick="location.href='/jsp/signUpExpert.jsp'" value="${signupExpert}" />${signUpExpertSuccess}
-
+<jsp:include page="../head.jsp"/>
+<jsp:include page="../logo.jsp"/>
+<div style="margin-left: 650px">
+<Input type="button" onclick="location.href='/jsp/admin/signUpExpert.jsp'" value="${signupExpert}" />${signUpExpertSuccess}
 <br>
 <br>
-
-<Input type="button" onclick="location.href='/jsp/serviceAdd.jsp'" value="${addService}" />${serviceAddSuccess}
-
+<Input type="button" onclick="location.href='/jsp/admin/serviceAdd.jsp'" value="${addService}" />${serviceAddSuccess}
+</div>
 </body>
 </html>

@@ -40,14 +40,13 @@ public class UserSpecificationInfoByLogin implements Specification<User> {
             connection = ConnectionPoolImpl.getInstance().getConnection();
 
             statement = connection.prepareStatement(sql);
-            System.out.println("ИЩЕМ ПО ЛОГИНУ: " + desiredLogin);
             statement.setString(1, desiredLogin);
             resultSetUser = statement.executeQuery();
             if (resultSetUser.next()) {
-                System.out.println("нашли того по логину, о ком инфу хотим посмотреть");
                 user = new User();
                 user.setLogin(resultSetUser.getString("login"));
                 user.setEmail(resultSetUser.getString("email"));
+                user.setUserId(Long.valueOf(resultSetUser.getString("user_id")));
 
 
                 PreparedStatement statementUserContent = null;
@@ -59,7 +58,6 @@ public class UserSpecificationInfoByLogin implements Specification<User> {
                 resultSetUserContent = statementUserContent.executeQuery();
 
                 if (resultSetUserContent.next()) {
-
                     UserContent userContent = new UserContent(resultSetUserContent.getString("first_name"),
                             resultSetUserContent.getString("last_name"),
                             resultSetUserContent.getString("telephone"),

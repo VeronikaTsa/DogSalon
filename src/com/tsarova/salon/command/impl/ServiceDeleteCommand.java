@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDeleteCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {

@@ -13,6 +13,34 @@ public class UserContent implements Entity {
     public UserContent() {
     }
 
+    public UserContent(String firstName, String lastName, String telephone, Date birthday, UserSex sex) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.birthday = birthday;
+        this.sex = sex;
+    }
+
+    public UserContent(String firstName, String lastName, String telephone, UserSex sex) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.sex = sex;
+    }
+
+    public UserContent(String firstName, String lastName, String telephone, Date birthday) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.birthday = birthday;
+    }
+
+    public UserContent(String firstName, String lastName, String telephone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+    }
+
     public UserContent(String firstName, String lastName, String telephone, String picture) {
         this.firstName = firstName;
         this.lastName = lastName;

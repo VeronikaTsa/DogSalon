@@ -27,8 +27,6 @@ public class UserInfoCommand implements Command {
             if (user != null) {//заменить на optional
                 System.out.println("FROM USER INFO COMMAND: " + user);
                 requestContent.setSessionAttribute("someone", user);
-                /*commandContent = new CommandContent(CommandContent.ResponseType.FORWARD,
-                        PageResourceManager.getInstance().getValue("jsp.someoneInfo"));*/
             } else {
                 System.out.println("нет такого");
             }

@@ -66,7 +66,7 @@ public class SQLQuery {
             "    WHERE answer.question_answer_id IS NULL;";
 
 
-    public static final String INFO_BY_LOGIN = "SELECT user.email, user.login, \n" +
+    public static final String INFO_BY_LOGIN = "SELECT user.email, user.login, user.user_id,\n" +
             "\tuser_content.first_name, user_content.last_name, user_content.telephone, user_content.birthday, user_content.picture, user_content.sex\n" +
             "\t\tFROM user left join user_content on user.user_id=user_content.user_id \n" +
             "\t\twhere user.login = ?;";
@@ -91,4 +91,16 @@ public class SQLQuery {
             "\t\t\t\tfrom answer join user on answer.user_id=user.user_id) \n" +
             "\t\tas d\n" +
             "\ton b.question_id = d.question_answer_id order by d.create_time desc;";
+
+    public static final String UPDATE_SERVICE = "UPDATE service \n" +
+            "    SET service_name = ?, content = ?, picture = ?, price = ?\n" +
+            "    WHERE service_id = ?;";
+
+    public static final String UPDATE_USER = "UPDATE user \n" +
+            "    SET login = ?, email = ?, password = ?" +
+            "    WHERE user_id = ?;";
+
+    public static final String UPDATE_USER_INFO = "UPDATE user_content \n" +
+            "    SET first_name = ?, last_name = ?, telephone = ?, birthday = ?, sex = ?" +
+            "    WHERE user_id = ?;";
 }
