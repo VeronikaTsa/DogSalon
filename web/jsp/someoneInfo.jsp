@@ -26,7 +26,6 @@
         <div class="user-info">
             <p>login: <c:out value="${sessionScope.someone.login}"/></p>
             <p>email: <c:out value="${sessionScope.someone.email}"/></p>
-            <p>picture:  <c:out value="${sessionScope.someone.userContent.picture}"/></p>
             <c:if test="${not empty sessionScope.someone.userContent}">
                 <c:if test="${not empty sessionScope.someone.userContent.firstName}">
                     <p>first name: <c:out value="${sessionScope.someone.userContent.firstName}"/></p>

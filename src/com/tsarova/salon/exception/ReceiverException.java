@@ -1,5 +1,8 @@
 package com.tsarova.salon.exception;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class ReceiverException extends Exception {
     public ReceiverException() {
     }

@@ -1,5 +1,8 @@
 package com.tsarova.salon.exception;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class CommandException extends Exception {
     public CommandException() {
     }

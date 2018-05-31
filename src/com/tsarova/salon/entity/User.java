@@ -18,6 +18,10 @@ public class User implements Entity {
     public User() {
     }
 
+    public User(Long userId) {
+        this.userId = userId;
+    }
+
     public User(Long userId, String email, String login, String password) {
         this.userId = userId;
         this.email = email;

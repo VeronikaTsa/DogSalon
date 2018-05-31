@@ -1,6 +1,9 @@
 package com.tsarova.salon.exception;
 
-public class RepositoryException extends Exception{
+/**
+ * @author Veronika Tsarova
+ */
+public class RepositoryException extends Exception {
     public RepositoryException() {
     }
 

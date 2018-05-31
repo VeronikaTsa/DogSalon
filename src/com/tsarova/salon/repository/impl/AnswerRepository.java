@@ -21,7 +21,7 @@ public class AnswerRepository implements Repository<Answer> {
 
     @Override
     public boolean add(Answer answer) throws RepositoryException {
-        String sql = SQLQuery.ADD_ANSWER;
+        String sql = SQLQuery.REPLACE_ANSWER;
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -47,6 +47,25 @@ public class AnswerRepository implements Repository<Answer> {
 
     @Override
     public boolean remove(Answer answer) throws RepositoryException {
+        String sql = SQLQuery.DELETE_ANSWER;
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = ConnectionPoolImpl.getInstance().getConnection();
+
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, answer.getId().toString());
+            if(statement.executeUpdate()>0){
+                return true;
+            }
+
+        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+            logger.catching(Level.ERROR, e);
+            throw new RepositoryException(e);
+        } finally {
+            ConnectionPoolImpl.getInstance().closeConnection(connection);
+        }
         return false;
     }
 

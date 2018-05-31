@@ -38,41 +38,8 @@
 <body>
 <jsp:include page="../head.jsp"/>
 <jsp:include page="../logo.jsp"/>
-${requestScope.answerAddSuccess}
-<c:set var="list" value="${requestScope.questionNotAnsweredList}"/>
-
-
-<c:if test="${not empty list}">
-<div style="margin-left: 600px">
-    <c:forEach items="${list}" var="element">
-        <br><br>
-        <a href="/ServletController?command=userInfo&userLogin=${element.userLogin}"
-           class="user">
-            <c:out value="${element.userLogin}"/>
-        </a>
-        <br>
-        ${element.createTime}
-        <br>
-        <p style="font-size: 20px">
-            <c:out value="${element.content}"/>
-        </p>
-
-        <br>
-        <c:if test="${sessionScope.user.role.getValue().equals('expert')}">
-            <form action="ServletController" method="post">
-                <input type="hidden" name="id" value="${element.id}"/>
-                <Input type="submit" value="Удалить"/>
-                <input type="hidden" name="command" value="questionDelete" />
-            </form>
-
-
-            <a class="link" href="/jsp/expert/answerAdd.jsp?questionContent=${element.content}&questionCreateTime=${element.createTime}&questionAuthor=${element.userLogin}&questionId=${element.id}">Ответить</a>
-
-            <br>
-        </c:if>
-        <br>
-    </c:forEach>
-</div>
-</c:if>
+<jsp:include page="/ServletController" flush="true">
+    <jsp:param name="command" value="questionNotAnswered" />
+</jsp:include>
 </body>
 </html>

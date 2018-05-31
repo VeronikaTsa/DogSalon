@@ -93,12 +93,9 @@ public class FeedbackRepository implements Repository<Feedback> {
                 if (resultSet.next()) {
                     String feedbackContent = resultSet.getString("content");
                     Date feedbackCreateTime = new Date(resultSet.getTimestamp("create_time").getTime());
-                    String timeOfCreate = resultSet.getString("create_time");
                     Long feedbackId = Long.valueOf(resultSet.getString("feedback_id"));
                     String userLogin = resultSet.getString("login");
-                    //feedbackList.add(new Feedback(feedbackContent, feedbackCreateTime, feedbackId, userLogin));//??????????????????
-                    feedbackList.add(new Feedback(feedbackContent, timeOfCreate, feedbackId, userLogin));//??????????????????
-
+                    feedbackList.add(new Feedback(feedbackContent, feedbackCreateTime, feedbackId, userLogin));
                 }
             }
         } catch (SQLException | NullPointerException | ConnectionPoolException e) {

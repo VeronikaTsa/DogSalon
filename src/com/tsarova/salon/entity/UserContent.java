@@ -8,7 +8,6 @@ public class UserContent implements Entity {
     private String telephone;
     private Date birthday;
     private UserSex sex;
-    private String picture;
 
     public UserContent() {
     }
@@ -41,12 +40,7 @@ public class UserContent implements Entity {
         this.telephone = telephone;
     }
 
-    public UserContent(String firstName, String lastName, String telephone, String picture) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.telephone = telephone;
-        this.picture = picture;
-    }
+
 
     public String getFirstName() {
         return firstName;
@@ -88,13 +82,6 @@ public class UserContent implements Entity {
         this.sex = sex;
     }
 
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -110,8 +97,7 @@ public class UserContent implements Entity {
             return false;
         if (getBirthday() != null ? !getBirthday().equals(that.getBirthday()) : that.getBirthday() != null)
             return false;
-        if (getSex() != that.getSex()) return false;
-        return getPicture() != null ? getPicture().equals(that.getPicture()) : that.getPicture() == null;
+        return (getSex() == that.getSex());
     }
 
     @Override
@@ -121,7 +107,6 @@ public class UserContent implements Entity {
         result = 31 * result + (getTelephone() != null ? getTelephone().hashCode() : 0);
         result = 31 * result + (getBirthday() != null ? getBirthday().hashCode() : 0);
         result = 31 * result + (getSex() != null ? getSex().hashCode() : 0);
-        result = 31 * result + (getPicture() != null ? getPicture().hashCode() : 0);
         return result;
     }
 
@@ -133,7 +118,6 @@ public class UserContent implements Entity {
                 ", telephone='" + telephone + '\'' +
                 ", birthday=" + birthday +
                 ", sex=" + sex +
-                ", picture='" + picture + '\'' +
                 '}';
     }
 }

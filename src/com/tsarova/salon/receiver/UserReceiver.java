@@ -87,7 +87,7 @@ public class UserReceiver {
                 }
             }
         }
-        System.out.println("НАДО " + map.get("email"));
+        //System.out.println("НАДО " + map.get("email"));
         if (!password.equals(passwordRepeat)) {
             map.put("passwordRepeat", "Неверно введен пароль");
         }
@@ -176,7 +176,8 @@ public class UserReceiver {
     public static boolean updateUser(Long id, String emailToEdit, String loginToEdit, String firstNameToEdit,
                                      String lastNameToEdit, String telephoneToEdit, String birthdayToEdit,
                                      String sexToEdit, String oldPassword, String newPassword,
-                                     User sessionUser, Map<String, String> errorMap) throws ReceiverException {
+                                     User sessionUser) throws ReceiverException {
+        System.out.println(sexToEdit);
         if (sessionUser.getUserContent() != null) {
             if (!(sessionUser.getEmail().equals(emailToEdit) && sessionUser.getLogin().equals(loginToEdit) &&
                     sessionUser.getUserContent().getFirstName().equals(firstNameToEdit) &&
@@ -194,6 +195,13 @@ public class UserReceiver {
                 if (!emailToEdit.isEmpty() && !loginToEdit.isEmpty()) {
                     Repository<User> userRepository = new UserRepository();
                     User user;
+                    if(firstNameToEdit.isEmpty() &&
+                            lastNameToEdit.isEmpty() &&
+                            telephoneToEdit.isEmpty() &&
+                            birthdayToEdit.isEmpty() &&
+                            "none".equals(sexToEdit)){
+                        user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword());
+                    } else
                     if (sexToEdit.equals("none")) {
                         if (!birthdayToEdit.isEmpty()) {
                             user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
@@ -203,6 +211,7 @@ public class UserReceiver {
                             user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
                                     new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit));
                         }
+                        System.out.println("sex is none so: \n" + user);
 
                     } else {
                         if (!birthdayToEdit.isEmpty()) {
@@ -243,8 +252,8 @@ public class UserReceiver {
             Repository<User> userRepository = new UserRepository();
             User user;
             System.out.println("У кого-то нет контента");
-            if (!firstNameToEdit.isEmpty() || !lastNameToEdit.isEmpty() || !telephoneToEdit.isEmpty() ||
-                    !birthdayToEdit.isEmpty() || !"none".equals(sexToEdit)) {
+            if ((!firstNameToEdit.isEmpty() || !lastNameToEdit.isEmpty() || !telephoneToEdit.isEmpty() ||
+                    !birthdayToEdit.isEmpty()) && !"none".equals(sexToEdit)) {
                 System.out.println("У кого-то не было контента и вот что-то появилось с измененным полом");
                 if (!birthdayToEdit.isEmpty()) {
                     user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
@@ -363,7 +372,6 @@ public class UserReceiver {
             logger.catching(Level.ERROR, e);
             return 1;
         }
-        //return 0; //???????????
     }
 
     private static int generateCode() {

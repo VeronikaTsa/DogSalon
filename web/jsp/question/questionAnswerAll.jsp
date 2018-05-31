@@ -51,6 +51,19 @@
         <c:out value="${element.answerContent}"/>
         <br>
         <br>
+    <c:if test="${sessionScope.user.role.getValue().equals('expert')}">
+    <a
+            style="border-bottom: 1px solid #222; text-decoration:none; color:#222;"
+            href="<c:url value="/ServletController?id=${element.questionAnswerId}&command=answerDelete"/>">
+        Удалить
+    </a> /
+        <a
+                style="border-bottom: 1px solid #222; text-decoration:none; color:#222;"
+                href="<c:url value="/jsp/expert/answerAdd.jsp?questionContent=${element.questionContent}&questionCreateTime=${element.questionCreateTime}&questionAuthor=${element.questionUserLogin}&questionId=${element.questionAnswerId}&answerContent=${element.answerContent}"/>">
+            Изменить
+        </a>
+    </c:if>
+
         <br>
 
         <br><br>

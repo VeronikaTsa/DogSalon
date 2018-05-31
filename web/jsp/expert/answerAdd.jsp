@@ -9,6 +9,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <html>
 <head>
+    <c:choose>
+        <c:when test="${not empty param.questionId}">
+            <c:set var="questionAuthor" value="${param.questionAuthor}"/>
+            <c:set var="questionCreateTime}" value="${param.questionCreateTime}}"/>
+            <c:set var="questionContent" value="${param.questionContent}"/>
+            <c:set var="questionId" value="${param.questionId}"/>
+            <c:set var="answerContent" value="${param.answerContent}"/>
+        </c:when>
+        <c:otherwise>
+            <c:set var="questionAuthor" value="${requestScope.questionAuthor}"/>
+            <c:set var="questionCreateTime" value="${requestScope.questionCreateTime}}"/>
+            <c:set var="questionContent" value="${requestScope.questionContent}"/>
+            <c:set var="questionId" value="${requestScope.questionId}"/>
+            <c:set var="answerContent" value="${requestScope.answerContent}"/>
+        </c:otherwise>
+    </c:choose>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/cc.css">
     <title>Add answer</title>
@@ -43,8 +59,8 @@ ${param.questionCreateTime}
 <br>
 
 <form action="/ServletController" method="post">
-    <Input type="Text" name="answer" value="" width="100px" height="50px"/>
-    <input type="hidden" name="questionId" value="${param.questionId}" />
+    <Input type="Text" name="answer" value="${answerContent}" width="100px" height="50px"/>
+    <input type="hidden" name="questionId" value="${questionId}" />
     <Input type="submit" value="Ответить"/>
     <input type="hidden" name="command" value="answerAdd" />
 </form>

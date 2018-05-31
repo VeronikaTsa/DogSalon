@@ -1,5 +1,8 @@
 package com.tsarova.salon.content;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class CommandContent {
     private ResponseType responseType;
     private String nextPage;

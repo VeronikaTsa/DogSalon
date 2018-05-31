@@ -6,13 +6,16 @@
   Time: 16:37
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
     <title>${param.name}</title>
     <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
+
     <c:choose>
-        <c:when test="${not empty param.picture}">
+        <c:when test="${not empty param.name}">
             <c:set value="${param.picture}" var="picture"/>
             <c:set var="name" value="${param.name}"/>
             <c:set var="content" value="${param.content}"/>
@@ -49,8 +52,7 @@
                                    </a> /
                                    <a
                                            style="border-bottom: 1px solid #222;"
-                                           href="<c:url value="/jsp/admin/serviceEdit.jsp?id=${id}&name=${name}&content=
-                                           ${content}&price=${price}&picture=${picture}"/>">
+                                           href="<c:url value="/jsp/admin/serviceEdit.jsp?id=${id}&name=${name}&content=${content}&price=${price}&picture=${picture}"/>">
                                        Изменить
                                    </a>
                                </span>

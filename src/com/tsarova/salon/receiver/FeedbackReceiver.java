@@ -32,7 +32,7 @@ public class FeedbackReceiver {
         return false;
     }
 
-    public static boolean delFeedback(Long feedbackId) throws ReceiverException {
+    public static boolean removeFeedback(Long feedbackId) throws ReceiverException {
         if (feedbackId != null) {//может, не надо
             Feedback feedback = new Feedback(feedbackId);
             Repository<Feedback> feedbackRepository = new FeedbackRepository();

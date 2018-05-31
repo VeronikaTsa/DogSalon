@@ -34,7 +34,6 @@
         </c:if>
         <p>email: <c:out value="${sessionScope.user.email}"/></p>
         <p> login: <c:out value="${sessionScope.user.login}"/></p>
-        <p>picture:  <c:out value="${sessionScope.user.userContent.picture}"/></p>
         <c:if test="${not empty sessionScope.user.userContent}">
             <c:if test="${not empty sessionScope.user.userContent.firstName}">
                 <p>first name: <c:out value="${sessionScope.user.userContent.firstName}"/></p>

@@ -25,6 +25,8 @@ public class Service implements Entity {
         this.price = price;
     }
 
+
+
     public Service(Long id, String name, String content, double price, String picture) {
         this.id = id;
         this.name = name;

@@ -35,7 +35,9 @@ public class UserRepository implements Repository<User> {
     @Override
     public boolean update(User user) throws RepositoryException {
         final String SQL_UPDATE_USER = SQLQuery.UPDATE_USER;
-        final String SQL_UPDATE_USER_INFO = SQLQuery.UPDATE_USER_INFO;
+        final String SQL_REPLACE_USER_CONTENT = SQLQuery.REPLACE_USER_CONTENT;
+        final String SQL_DELETE_USER_CONTENT = SQLQuery.DELETE_USER_CONTENT;
+
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -52,14 +54,16 @@ public class UserRepository implements Repository<User> {
             if(statement.executeUpdate()>0){
                 if(user.getUserContent() != null){
                     PreparedStatement statementUserInfo;
-                    statementUserInfo = connection.prepareStatement(SQL_UPDATE_USER_INFO);
+                    statementUserInfo = connection.prepareStatement(SQL_REPLACE_USER_CONTENT);
                     statementUserInfo.setString(1, user.getUserContent().getFirstName());
                     statementUserInfo.setString(2, user.getUserContent().getLastName());
                     statementUserInfo.setString(3, user.getUserContent().getTelephone());
                     statementUserInfo.setString(6, String.valueOf(user.getUserId()));
+
                     if(user.getUserContent().getSex() != null){
                         statementUserInfo.setString(5, String.valueOf(user.getUserContent().getSex()));
                     } else {
+                        System.out.println("statement user.getUserContent().getSex() is null");
                         statementUserInfo.setString(5, null);
                     }
                     if(user.getUserContent().getBirthday() != null){
@@ -69,6 +73,15 @@ public class UserRepository implements Repository<User> {
                     }
 
                     if(statementUserInfo.executeUpdate()>0){
+                        System.out.println("апдейтнулся");
+                        return true;//??????????????????
+                    }
+                } else {
+                    PreparedStatement statementUserInfoDel;
+                    statementUserInfoDel = connection.prepareStatement(SQL_DELETE_USER_CONTENT);
+                    statementUserInfoDel.setString(1, String.valueOf(user.getUserId()));
+                    if(statementUserInfoDel.executeUpdate()>0){
+                        System.out.println("контент удалился");
                         return true;//??????????????????
                     }
                 }
@@ -124,8 +137,7 @@ public class UserRepository implements Repository<User> {
 
                     UserContent userContent = new UserContent(resultSetUserContent.getString("first_name"),
                             resultSetUserContent.getString("last_name"),
-                            resultSetUserContent.getString("telephone"),
-                            resultSetUserContent.getString("picture"));
+                            resultSetUserContent.getString("telephone"));
 
                     if (resultSetUserContent.getString("birthday") != null) {
                         userContent.setBirthday(Date.valueOf(resultSetUserContent.getString("birthday")));

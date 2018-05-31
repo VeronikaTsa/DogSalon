@@ -8,7 +8,6 @@ public class Feedback implements Entity {
     private String content;
     private Date createTime;
     private Long id;
-    private String timeOfCreating;
 
 
     public Feedback(Long userId, String content) {
@@ -34,20 +33,8 @@ public class Feedback implements Entity {
         this.id = id;
     }
 
-    public Feedback(String content, String timeOfCreating, Long id, String userLogin) {
-        this.userLogin = userLogin;
-        this.content = content;
-        this.timeOfCreating = timeOfCreating;
-        this.id = id;
-    }
 
-    public String getTimeOfCreating() {
-        return timeOfCreating;
-    }
 
-    public void setTimeOfCreating(String timeOfCreating) {
-        this.timeOfCreating = timeOfCreating;
-    }
 
     public Feedback(Long id) {
         this.id = id;
@@ -102,5 +89,14 @@ public class Feedback implements Entity {
         this.id = id;
     }
 
-
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "userId=" + userId +
+                ", userLogin='" + userLogin + '\'' +
+                ", content='" + content + '\'' +
+                ", createTime=" + createTime +
+                ", id=" + id +
+                '}';
+    }
 }

@@ -6,7 +6,11 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class RequestContent {
+
     private String contextPath;
     private String requestURI;
     private String method;
@@ -62,7 +66,6 @@ public class RequestContent {
 
     public String getParameter(String key) {
         String[] params = requestParameters.get(key);
-        //logger.log(Level.DEBUG, "PARAMS: null= " + (params == null) + ((params == null) ? "" : (", length= " + params.length)));
         if (params == null || params.length == 0) {
             return null;
         } else {

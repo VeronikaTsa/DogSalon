@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="All Tests" verbose="5">
+    <test name="RepositoryTests" parallel="classes">
+        <classes>
+            <class name="test.com.tsarova.salon.repository.impl.ServiceRepositoryTest"></class>
+            <class name="test.com.tsarova.salon.repository.impl.QuestionRepositoryTest"></class>
+            <class name="test.com.tsarova.salon.repository.impl.FeedbackRepositoryTest"></class>
+        </classes>
+    </test>
+    <test name="ReceiverTests">
+        <classes>
+            <class name="test.com.tsarova.salon.receiver.UserReceiverTest"></class>
+            <class name="test.com.tsarova.salon.receiver.QuestionReceiverTest"></class>
+        </classes>
+    </test>
+    <test name="UtilTests">
+        <classes>
+            <class name="test.com.tsarova.salon.util.EncryptingTest"></class>
+        </classes>
+    </test>
+</suite>

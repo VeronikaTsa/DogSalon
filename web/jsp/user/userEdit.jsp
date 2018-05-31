@@ -40,12 +40,11 @@
             <input class="submit-link" type="submit" value="Изменить">
             <p>email: <Input type="Text" name="emailToEdit" value="<c:out value="${sessionScope.user.email}"/>"/></p>
             <p>login: <Input type="Text" name="loginToEdit" value="<c:out value="${sessionScope.user.login}"/>"/></p>
-            <p>picture:  <c:out value="${sessionScope.user.userContent.picture}"/></p>
             <p>first name: <Input type="Text" name="firstNameToEdit" value="<c:out value="${sessionScope.user.userContent.firstName}"/>"/></p>
             <p>last name: <Input type="Text" name="lastNameToEdit" value="<c:out value="${sessionScope.user.userContent.lastName}"/>"/></p>
             <p>telephone: <Input type="Text" name="telephoneToEdit" value="<c:out value="${sessionScope.user.userContent.telephone}"/>"/></p>
             <p>birthday: <Input type="date" name="birthdayToEdit" value="<c:out value="${sessionScope.user.userContent.birthday}"/>"/></p>
-            <p>
+            <p>sex:
             <select name="sexToEdit">
                 <option selected value="none">Выберите пол</option>
                 <c:if test="${empty sessionScope.user.userContent.sex}">

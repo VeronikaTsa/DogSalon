@@ -26,9 +26,8 @@
 <jsp:include page="../head.jsp"/>
 <jsp:include page="../logo.jsp"/>
 <div style="margin-left: 650px">
-    <form action="/ServletController" method="post">
+    <form action="/jsp/expert/questionNotAnswered.jsp" method="post">
         <Input type="submit" value="${questionNotAnswered}"/>
-        <input type="hidden" name="command" value="question" />
     </form>
 </div>
 </body>

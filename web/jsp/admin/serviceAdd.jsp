@@ -11,7 +11,16 @@
     <link rel="stylesheet" href="/css/cc.css">
 
     <title>Add Service</title>
-
+    <style>
+        .no-spinners {
+            -moz-appearance:textfield;
+        }
+        .no-spinners::-webkit-inner-spin-button,
+        .no-spinners::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../head.jsp"/>
@@ -23,7 +32,7 @@
     Введите описание: <Input type="Text" name="content" value=""/>${requestScope.map.content}
     <br>
     <br>
-    Введите цену: <input type="Text" name ="price"  value=""/>${requestScope.map.price}
+    Введите цену: <input type="number" class="no-spinners" name ="price"  value=""/>${requestScope.map.price}
     <br>
     <br>
 
@@ -33,12 +42,6 @@
     <input type="hidden" name="command" value="serviceadd" />
     <br>
     <br>
-</form>
-
-<form action="/ServletController" enctype = "multipart/form-data" method="post">
-    Выберите файл:<INPUT type="file" name="picture">${requestScope.map.picture}
-    <Input type="submit" value="Загрузить файл"/>
-    <input type="hidden" name="command" value="ADDFILE" />
 </form>
 </body>
 </html>

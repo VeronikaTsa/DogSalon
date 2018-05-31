@@ -1,5 +1,8 @@
 package com.tsarova.salon.exception;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class ConnectionPoolException extends Exception {
     public ConnectionPoolException() {
     }

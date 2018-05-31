@@ -1,21 +1,21 @@
 package com.tsarova.salon.command;
 
-
 import com.tsarova.salon.command.impl.*;
 
+/**
+ * @author Veronika Tsarova
+ */
 public enum CommandEnum {
     LOGIN(new LogInCommand()),
     SIGNUP(new SignUpCommand()),
     LOGOUT(new LogOutCommand()),
     SIGNUPCONTINUE(new SignUpContinueCommand()),
     SIGNUPEXPERT(new SignUpExpertCommand()),
-    QUESTION(new QuestionCommand()),
+    QUESTIONNOTANSWERED(new QuestionNotAnsweredCommand()),
     FEEDBACK(new FeedbackCommand()),
     FEEDBACKADD(new FeedbackAddCommand()),
     FEEDBACKDELETE( new FeedbackDeleteCommand()),
     USERINFO(new UserInfoCommand()),
-    FEEDBACKUSER(new FeedbackUserCommand()),
-    QUESTIONUSER(new QuestionUserCommand()),
     ANSWERADD(new AnswerAddCommand()),
     QUESTIONANSWER(new QuestionAnswerCommand()),
     QUESTIONASK(new QuestionAskCommand()),
@@ -24,7 +24,8 @@ public enum CommandEnum {
     SERVICEADD(new ServiceAddCommand()),
     SERVICEDELETE(new ServiceDeleteCommand()),
     SERVICEUPDATE(new ServiceUpdateCommand()),
-    USERUPDATE(new UserUpdateCommand());
+    USERUPDATE(new UserUpdateCommand()),
+    ANSWERDELETE(new AnswerDeleteCommand());
 
 
     private Command command;

@@ -12,28 +12,29 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class SignUpExpertCommand implements Command{
+/**
+ * @author Veronika Tsarova
+ */
+public class SignUpExpertCommand implements Command {
     private static Logger logger = LogManager.getLogger();
 
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {
-        CommandContent commandContent;
-        commandContent = new CommandContent(CommandContent.ResponseType.REDIRECT,
-                PageResourceManager.getInstance().getValue("jsp.adminPanel"));
+        final String SIGN_UP_EXPERT_PAGE = PageResourceManager.getInstance().getValue("jsp.signUpExpert");
+        final String ADMIN_PANEL_PAGE = PageResourceManager.getInstance().getValue("jsp.adminPanel");
+        final String EXPERT_EMAIL = requestContent.getParameter("email");
+        final String EXPERT_LOGIN = requestContent.getParameter("login");
+
+        CommandContent commandContent = new CommandContent(CommandContent.ResponseType.REDIRECT, SIGN_UP_EXPERT_PAGE);
 
         try {
-            if(UserReceiver.createUser(requestContent.getParameter("email"), requestContent.getParameter("login"),
-                    UserRole.EXPERT)){
-
-                requestContent.setAttribute("signUpExpertSuccess", "специалист зареган");
-
+            if (UserReceiver.createUser(EXPERT_EMAIL, EXPERT_LOGIN, UserRole.EXPERT)) {
+                commandContent = new CommandContent(CommandContent.ResponseType.REDIRECT, ADMIN_PANEL_PAGE);
             }
-
         } catch (ReceiverException e) {
             logger.catching(Level.ERROR, e);
             throw new CommandException();
         }
-        requestContent.setAttribute("signUpExpertSuccess", "специалист не был зареган");
 
         return commandContent;
     }

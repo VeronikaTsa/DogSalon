@@ -2,6 +2,9 @@ package com.tsarova.salon.resource.db;
 
 import java.util.ResourceBundle;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class DBResourceManager {
     private static final DBResourceManager instance = new DBResourceManager();
 

@@ -30,7 +30,7 @@
             color:#d64431; /* Цвет ссылок при наведении на них курсора мыши */
         }
     </style>
-    <title>Error 500 – Page not found</title>
+    <title>Error 500</title>
 </head>
 
 <body>

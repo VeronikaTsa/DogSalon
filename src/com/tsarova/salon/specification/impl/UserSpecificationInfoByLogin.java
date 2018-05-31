@@ -60,8 +60,7 @@ public class UserSpecificationInfoByLogin implements Specification<User> {
                 if (resultSetUserContent.next()) {
                     UserContent userContent = new UserContent(resultSetUserContent.getString("first_name"),
                             resultSetUserContent.getString("last_name"),
-                            resultSetUserContent.getString("telephone"),
-                            resultSetUserContent.getString("picture"));
+                            resultSetUserContent.getString("telephone"));
 
                     if (resultSetUserContent.getString("birthday") != null) {
                         userContent.setBirthday(Date.valueOf(resultSetUserContent.getString("birthday")));

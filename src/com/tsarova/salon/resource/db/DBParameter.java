@@ -1,5 +1,8 @@
 package com.tsarova.salon.resource.db;
 
+/**
+ * @author Veronika Tsarova
+ */
 public final class DBParameter {
 
     private DBParameter() {

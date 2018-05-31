@@ -11,6 +11,9 @@ public class Answer implements Entity{
     private Date createTime;
     private Date lastUpdate;
 
+    public Answer(Long id) {
+        this.id = id;
+    }
 
     public Answer(String userLogin, String content, Long id) {
         this.userLogin = userLogin;

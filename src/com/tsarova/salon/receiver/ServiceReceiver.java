@@ -53,7 +53,7 @@ public class ServiceReceiver {
     }
 
 
-    public static boolean delService(Long serviceId) throws ReceiverException {
+    public static boolean removeService(Long serviceId) throws ReceiverException {
         if(serviceId!=null){//может, не надо
             Service service = new Service(serviceId);
             Repository<Service> serviceRepository = new ServiceRepository();

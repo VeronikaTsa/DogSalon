@@ -2,6 +2,9 @@ package com.tsarova.salon.resource.page;
 
 import java.util.ResourceBundle;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class PageResourceManager {
 
     private static final PageResourceManager instance = new PageResourceManager();

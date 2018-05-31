@@ -7,9 +7,11 @@
   Time: 22:58
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
     <c:choose>
         <c:when test="${not empty param.id}">
             <c:set value="${param.picture}" var="picture"/>
@@ -55,7 +57,7 @@
         <div class="permalink-image_post">
             <div class="permalink-caption_post">
                 <div class="permalink-caption">
-                    <p style="font-size: 30px">
+                    <p>
                         <Input type="Text" name="nameToEdit" value="<c:out value="${name}"/>"/><div class="error-message">${requestScope.errorMap.serviceName}</div>
                     </p>
                 </div>
@@ -65,8 +67,8 @@
         <div class="permalink-caption_post">
             <input type="number" class="no-spinners" name="priceToEdit" value="<c:out value="${price}"/>"/><div class="error-message">${requestScope.errorMap.servicePrice}</div>
             <div class="permalink-caption">
-                <p style="font-size: 25px">
-                    <Input type="Text" name="contentToEdit" value="<c:out value="${content}"/>"/><div class="error-message">${requestScope.errorMap.serviceContent}</div>
+                <p>
+                    <Input type="Text" name="contentToEdit" value="${content}"/><div class="error-message">${requestScope.errorMap.serviceContent}</div>
                 </p>
             </div>
         </div>
