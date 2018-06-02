@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Veronichka
@@ -9,6 +11,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <c:if test = "${empty sessionScope.language}">
+        <c:set var="language" value='en_US' scope="session"/>
+    </c:if>
+    <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+    <fmt:setLocale value="${language}"/>
+    <fmt:setBundle basename="text" var="local"/>
+    <fmt:message bundle="${local}" key="message.delete" var="delete"/>
+    <fmt:message bundle="${local}" key="message.edit" var="edit"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Title</title>
     <link rel="stylesheet" href="/css/cc.css">
@@ -55,12 +65,12 @@
     <a
             style="border-bottom: 1px solid #222; text-decoration:none; color:#222;"
             href="<c:url value="/ServletController?id=${element.questionAnswerId}&command=answerDelete"/>">
-        Удалить
+        ${delete}
     </a> /
         <a
                 style="border-bottom: 1px solid #222; text-decoration:none; color:#222;"
                 href="<c:url value="/jsp/expert/answerAdd.jsp?questionContent=${element.questionContent}&questionCreateTime=${element.questionCreateTime}&questionAuthor=${element.questionUserLogin}&questionId=${element.questionAnswerId}&answerContent=${element.answerContent}"/>">
-            Изменить
+            ${edit}
         </a>
     </c:if>
 

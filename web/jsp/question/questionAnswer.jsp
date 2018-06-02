@@ -20,6 +20,8 @@
     <fmt:setLocale value="${language}" />
     <fmt:setBundle basename="text" var="local"/>
     <fmt:message bundle="${local}" key="message.questions" var="questions" />
+    <fmt:message bundle="${local}" key="message.askExpert" var="askExpert" />
+
     <title>${questions}</title>
     <link rel="stylesheet" href="/css/cc.css">
     <style>
@@ -35,13 +37,13 @@
     </style>
 </head>
 <body>
-<jsp:include page="../head.jsp"/>
-<jsp:include page="../logo.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <c:set var="user" value="${sessionScope.user}"/>
 
 <c:if test="${not empty user}">
     <c:if test="${sessionScope.user.role.getValue().equals('user')}">
-        <Input type="button" onclick="location.href='/jsp/user/questionAsk.jsp'" value="Задать вопрос специалисту" />
+        <Input type="button" onclick="location.href='/jsp/user/questionAsk.jsp'" value="${askExpert}" />
     </c:if>
 
 </c:if>

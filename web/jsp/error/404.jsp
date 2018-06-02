@@ -7,7 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="ru"><head>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="ru">
+<head>
+    <c:if test = "${empty sessionScope.language}">
+        <c:set var="language" value='en_US' scope="session"/>
+    </c:if>
+    <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+    <fmt:setLocale value="${language}"/>
+    <fmt:setBundle basename="text" var="local"/>
+    <fmt:message bundle="${local}" key="message.startAgain" var="startAgain"/>
     <style type="text/css">
 
         body {color:#222;
@@ -70,7 +79,7 @@
             <br>
             - Что ты ко мне пристал? - рассердился Медвежонок. - Если тебя нет, то и меня нет. Понял?
             </p>
-        <p><a href="/index.jsp" class="beginning">Начать с начала</a></p>
+        <p><a href="/index.jsp" class="beginning">${startAgain}</a></p>
     </div>
 </div>
 

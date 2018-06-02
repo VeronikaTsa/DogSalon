@@ -35,6 +35,7 @@
     <fmt:setLocale value="${language}" />
     <fmt:setBundle basename="text" var="local"/>
     <fmt:message bundle="${local}" key="message.edit" var="edit" />
+
     <link rel="stylesheet" href="/css/cc.css">
     <style>
         .no-spinners {
@@ -49,9 +50,9 @@
     <title></title>
 </head>
 <body>
-<jsp:include page="../head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <div id="wrapper">
-    <jsp:include page="../logo.jsp"/>
+    <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
     <form action="/ServletUploader" enctype = "multipart/form-data" method="post">
     <div class="permalink-post">
         <div class="permalink-image_post">
@@ -75,7 +76,7 @@
     </div>
         <c:if test="${sessionScope.user.role.getValue().equals('administrator')}">
             Выберите файл:<INPUT type="file" name="picture">${requestScope.map.picture}
-            <Input type="submit" value="Загрузить">
+            <Input type="submit" value="${edit}">
             <input type="hidden" name="command" value="serviceUpdate" />
             <input type="hidden" name="serviceId" value="${id}" />
             <input type="hidden" name="pictureName" value="${picture}" />

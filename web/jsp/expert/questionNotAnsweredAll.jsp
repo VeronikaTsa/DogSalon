@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Veronichka
@@ -9,6 +11,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <c:if test = "${empty sessionScope.language}">
+        <c:set var="language" value='en_US' scope="session"/>
+    </c:if>
+    <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+    <fmt:setLocale value="${language}"/>
+    <fmt:setBundle basename="text" var="local"/>
+    <fmt:message bundle="${local}" key="message.delete" var="delete"/>
+    <fmt:message bundle="${local}" key="message.addAnswer" var="addAnswer"/>
+
     <title>Title</title>
 </head>
 <body>
@@ -32,10 +43,10 @@
             <c:if test="${sessionScope.user.role.getValue().equals('expert')}">
                 <form action="/ServletController" method="post">
                     <input type="hidden" name="id" value="${element.id}"/>
-                    <Input type="submit" value="Удалить"/>
+                    <Input type="submit" value="${delete}"/>
                     <input type="hidden" name="command" value="questionDelete" />
                 </form>
-                <a class="link" href="<c:url value="/jsp/expert/answerAdd.jsp?questionContent=${element.content}&questionCreateTime=${element.createTime}&questionAuthor=${element.userLogin}&questionId=${element.id}"/>">Ответить</a>
+                <a class="link" href="<c:url value="/jsp/expert/answerAdd.jsp?questionContent=${element.content}&questionCreateTime=${element.createTime}&questionAuthor=${element.userLogin}&questionId=${element.id}"/>">${addAnswer}</a>
                 <br>
             </c:if>
             <br>

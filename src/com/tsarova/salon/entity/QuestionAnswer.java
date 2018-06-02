@@ -2,6 +2,9 @@ package com.tsarova.salon.entity;
 
 import java.sql.Date;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class QuestionAnswer implements Entity {
     private String questionUserLogin;
     private Long questionAnswerId;
@@ -10,7 +13,8 @@ public class QuestionAnswer implements Entity {
     private String answerUserLogin;
     private String answerContent;
     private Date answerCreateTime;
-    private Date answerLastUpdate;
+
+    public QuestionAnswer(){}
 
     public QuestionAnswer(Long questionAnswerId, String questionUserLogin, String questionContent, Date questionCreateTime,
                           String answerUserLogin, String answerContent, Date answerCreateTime) {
@@ -79,11 +83,50 @@ public class QuestionAnswer implements Entity {
         this.answerCreateTime = answerCreateTime;
     }
 
-    public Date getAnswerLastUpdate() {
-        return answerLastUpdate;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof QuestionAnswer)) return false;
+
+        QuestionAnswer that = (QuestionAnswer) o;
+
+        if (getQuestionUserLogin() != null ? !getQuestionUserLogin().equals(that.getQuestionUserLogin()) : that.getQuestionUserLogin() != null)
+            return false;
+        if (getQuestionAnswerId() != null ? !getQuestionAnswerId().equals(that.getQuestionAnswerId()) : that.getQuestionAnswerId() != null)
+            return false;
+        if (getQuestionContent() != null ? !getQuestionContent().equals(that.getQuestionContent()) : that.getQuestionContent() != null)
+            return false;
+        if (getQuestionCreateTime() != null ? !getQuestionCreateTime().equals(that.getQuestionCreateTime()) : that.getQuestionCreateTime() != null)
+            return false;
+        if (getAnswerUserLogin() != null ? !getAnswerUserLogin().equals(that.getAnswerUserLogin()) : that.getAnswerUserLogin() != null)
+            return false;
+        if (getAnswerContent() != null ? !getAnswerContent().equals(that.getAnswerContent()) : that.getAnswerContent() != null)
+            return false;
+        return getAnswerCreateTime() != null ? getAnswerCreateTime().equals(that.getAnswerCreateTime()) : that.getAnswerCreateTime() == null;
     }
 
-    public void setAnswerLastUpdate(Date answerLastUpdate) {
-        this.answerLastUpdate = answerLastUpdate;
+    @Override
+    public int hashCode() {
+        int result = getQuestionUserLogin() != null ? getQuestionUserLogin().hashCode() : 0;
+        result = 31 * result + (getQuestionAnswerId() != null ? getQuestionAnswerId().hashCode() : 0);
+        result = 31 * result + (getQuestionContent() != null ? getQuestionContent().hashCode() : 0);
+        result = 31 * result + (getQuestionCreateTime() != null ? getQuestionCreateTime().hashCode() : 0);
+        result = 31 * result + (getAnswerUserLogin() != null ? getAnswerUserLogin().hashCode() : 0);
+        result = 31 * result + (getAnswerContent() != null ? getAnswerContent().hashCode() : 0);
+        result = 31 * result + (getAnswerCreateTime() != null ? getAnswerCreateTime().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionAnswer{" +
+                "questionUserLogin='" + questionUserLogin + '\'' +
+                ", questionAnswerId=" + questionAnswerId +
+                ", questionContent='" + questionContent + '\'' +
+                ", questionCreateTime=" + questionCreateTime +
+                ", answerUserLogin='" + answerUserLogin + '\'' +
+                ", answerContent='" + answerContent + '\'' +
+                ", answerCreateTime=" + answerCreateTime +
+                '}';
     }
 }

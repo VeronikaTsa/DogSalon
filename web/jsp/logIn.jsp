@@ -26,8 +26,8 @@
 
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
+<jsp:include page="../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../WEB-INF/jspf/logo.jsp"/>
 <div style="margin-left: 600px">
 <form action="/ServletController" method="post" charset="UTF-8">
     ${enterEmail}:    <Input type="Text" name="email" value="" />
@@ -36,7 +36,7 @@
     ${enterPassword}: <input type="password" name ="password" value="" />
     <br>
     <br>
-    <Input type="submit" value="Войти"/>
+    <Input type="submit" value="${logIn}"/>
     <input type="hidden" name="command" value="login" />
     <br>
     <br>

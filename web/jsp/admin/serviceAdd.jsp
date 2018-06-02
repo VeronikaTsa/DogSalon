@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Veronichka
@@ -9,8 +11,19 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/cc.css">
+    <c:if test = "${empty sessionScope.language}">
+        <c:set var="language" value='en_US' scope="session"/>
+    </c:if>
+    <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+    <fmt:setLocale value="${language}"/>
+    <fmt:setBundle basename="text" var="local"/>
+    <fmt:message bundle="${local}" key="message.addService" var="addService"/>
+    <fmt:message bundle="${local}" key="message.enterServiceName" var="enterServiceName"/>
+    <fmt:message bundle="${local}" key="message.enterServicePrice" var="enterServicePrice"/>
+    <fmt:message bundle="${local}" key="message.enterServiceDescription" var="enterServiceDescription"/>
 
-    <title>Add Service</title>
+
+    <title>${addService}</title>
     <style>
         .no-spinners {
             -moz-appearance:textfield;
@@ -23,22 +36,22 @@
     </style>
 </head>
 <body>
-<jsp:include page="../head.jsp"/>
-<jsp:include page="../logo.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <form action="/ServletController" method="post" charset="UTF-8">
-    Введите имя услуги: <Input type="Text" name="name" value=""/>${requestScope.map.name}
+    ${enterServiceName}: <Input type="Text" name="name" value=""/>${requestScope.map.name}
     <br>
     <br>
-    Введите описание: <Input type="Text" name="content" value=""/>${requestScope.map.content}
+    ${enterServiceDescription}: <Input type="Text" name="content" value=""/>${requestScope.map.content}
     <br>
     <br>
-    Введите цену: <input type="number" class="no-spinners" name ="price"  value=""/>${requestScope.map.price}
+    ${enterServicePrice}: <input type="number" class="no-spinners" name ="price"  value=""/>${requestScope.map.price}
     <br>
     <br>
 
 
     <br>
-    <Input type="submit" value="Создать услугу"/>
+    <Input type="submit" value="${addService}"/>
     <input type="hidden" name="command" value="serviceadd" />
     <br>
     <br>

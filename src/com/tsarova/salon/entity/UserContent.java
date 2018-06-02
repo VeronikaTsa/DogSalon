@@ -2,6 +2,9 @@ package com.tsarova.salon.entity;
 
 import java.sql.Date;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class UserContent implements Entity {
     private String firstName;
     private String lastName;
@@ -39,7 +42,6 @@ public class UserContent implements Entity {
         this.lastName = lastName;
         this.telephone = telephone;
     }
-
 
 
     public String getFirstName() {
@@ -82,7 +84,6 @@ public class UserContent implements Entity {
         this.sex = sex;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,14 +91,15 @@ public class UserContent implements Entity {
 
         UserContent that = (UserContent) o;
 
-        if (getFirstName() != null ? !getFirstName().equals(that.getFirstName()) : that.getFirstName() != null) return false;
+        if (getFirstName() != null ? !getFirstName().equals(that.getFirstName()) : that.getFirstName() != null)
+            return false;
         if (getLastName() != null ? !getLastName().equals(that.getLastName()) : that.getLastName() != null)
             return false;
         if (getTelephone() != null ? !getTelephone().equals(that.getTelephone()) : that.getTelephone() != null)
             return false;
         if (getBirthday() != null ? !getBirthday().equals(that.getBirthday()) : that.getBirthday() != null)
             return false;
-        return (getSex() == that.getSex());
+        return getSex() == that.getSex();
     }
 
     @Override

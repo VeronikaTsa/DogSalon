@@ -33,19 +33,21 @@
     <fmt:setLocale value="${language}"/>
     <fmt:setBundle basename="text" var="local"/>
     <fmt:message bundle="${local}" key="message.feedbacks" var="feedbacks"/>
+    <fmt:message bundle="${local}" key="message.addFeedback" var="addFeedback"/>
+
     <title>${feedbacks}</title>
 </head>
 <body>
 
 
-<jsp:include page="../head.jsp"/>
-<jsp:include page="../logo.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 
 
 <c:set var="user" value="${sessionScope.user}"/>
 <c:if test="${not empty user}">
     <c:if test="${sessionScope.user.role.getValue().equals('user')}">
-        <Input style="margin-left: 700px" type="button" onclick="location.href='/jsp/feedback/feedbackAdd.jsp'" value="Добавить отзыв" />
+        <Input style="margin-left: 700px" type="button" onclick="location.href='/jsp/user/feedbackAdd.jsp'" value="${addFeedback}" />
         <br>
     </c:if>
 </c:if>

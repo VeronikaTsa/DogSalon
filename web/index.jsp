@@ -24,10 +24,10 @@
 </head>
 <body>
 
-<jsp:include page="jsp/head.jsp"/>
+<jsp:include page="WEB-INF/jspf/head.jsp"/>
 
 <div id="wrapper">
-  <jsp:include page="/jsp/logo.jsp"/>
+  <jsp:include page="/WEB-INF/jspf/logo.jsp"/>
   <section class="posts">
 
     <jsp:include page="/ServletController" flush="true">

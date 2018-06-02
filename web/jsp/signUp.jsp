@@ -26,8 +26,8 @@
     <title>${signUp}</title>
 </head>
 <body>
-<jsp:include page="head.jsp"/>
-<jsp:include page="logo.jsp"/>
+<jsp:include page="../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../WEB-INF/jspf/logo.jsp"/>
 
 ${messageSendSuccess}
 <div style="margin-left: 600px">
@@ -44,7 +44,7 @@ ${messageSendSuccess}
     ${repeatPassword}: <input type="password" name ="passwordRepeat" value=""/>${requestScope.map.passwordRepeat}
     <br>
     <br>
-    <Input type="submit" value="Зарегистрироваться"/>
+    <Input type="submit" value="${signUp}"/>
     <input type="hidden" name="command" value="signup" />
     <br>
     <br>

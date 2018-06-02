@@ -1,5 +1,8 @@
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.net.URLDecoder" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
 <%--
   Created by IntelliJ IDEA.
   User: Veronichka
@@ -25,6 +28,23 @@
             </style>
         </c:otherwise>
     </c:choose>
+    <style>
+        #button-link{
+            background:none;
+            border:0;
+            color:#666;
+            text-decoration:underline;
+        }
+
+        #button-link:hover{
+            background:none;
+            border:0;
+            color:#666;
+            text-decoration:none;
+            cursor:pointer;
+            cursor:hand;
+        }
+    </style>
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -89,19 +109,17 @@
         <li>
             <c:choose>
                 <c:when test="${sessionScope.language.equals('ru_RU')}">
-                    <form>
-                        <a href="${pageContext.request.requestURL}?language=en_US">ENGLISH</a>
-                    </form>
+
+                        <a href="${pageContext.request.requestURL}?language=en_US&<ctg:decode>${pageContext.request.queryString}</ctg:decode>"> ENGLISH</a>
+
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.requestURL}?language=ru_RU">РУССКИЙ</a>
+
+                    <a href="${pageContext.request.requestURL}?language=ru_RU&<ctg:decode>${pageContext.request.queryString}</ctg:decode>">РУССКИЙ</a>
                 </c:otherwise>
             </c:choose>
         </li>
     </ul>
 </nav>
-
-
-
 </body>
 </html>

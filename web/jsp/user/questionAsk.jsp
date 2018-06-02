@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -10,15 +11,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <c:if test = "${empty sessionScope.language}">
+        <c:set var="language" value='en_US' scope="session"/>
+    </c:if>
+    <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+    <fmt:setLocale value="${language}" />
+    <fmt:setBundle basename="text" var="local"/>
+    <fmt:message bundle="${local}" key="message.ask" var="ask" />
+    <fmt:message bundle="${local}" key="message.askExpert" var="askExpert" />
+
     <link rel="stylesheet" href="/css/cc.css">
-    <title>Ask question</title>
+    <title>${askExpert}</title>
 </head>
 <body>
-<jsp:include page="../head.jsp"/>
-<jsp:include page="../logo.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <form action="/ServletController" method="post" charset="UTF-8">
     <Input type="Text" name="question" value="" width="100px" height="50px"/>
-    <Input type="submit" value="Задать вопрос"/>
+    <Input type="submit" value="${ask}"/>
     <input type="hidden" name="command" value="questionAsk" />
 </form>
 

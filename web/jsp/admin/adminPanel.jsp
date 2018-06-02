@@ -10,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/cc.css">
     <c:if test = "${empty sessionScope.language}">
@@ -25,8 +26,8 @@
 </head>
 <body>
 
-<jsp:include page="../head.jsp"/>
-<jsp:include page="../logo.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <div style="margin-left: 650px">
 <Input type="button" onclick="location.href='/jsp/admin/signUpExpert.jsp'" value="${signupExpert}" />${signUpExpertSuccess}
 <br>

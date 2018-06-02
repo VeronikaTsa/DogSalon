@@ -8,8 +8,8 @@ http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
 <short-name>ctg</short-name>
 <uri>customtags</uri>
 <tag>
-<name>info-time</name>
-<tag-class>com.tsarova.salon.tag.InfoTimeTag</tag-class>
-<body-content>empty</body-content>
+<name>decode</name>
+<tag-class>com.tsarova.salon.tag.DecodeTag</tag-class>
+<body-content>scriptless</body-content>
 </tag>
 </taglib>

@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Veronichka
@@ -10,7 +12,13 @@
 <html>
 <head>
     <title>Title</title>
-
+    <c:if test = "${empty sessionScope.language}">
+        <c:set var="language" value='en_US' scope="session"/>
+    </c:if>
+    <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+    <fmt:setLocale value="${language}"/>
+    <fmt:setBundle basename="text" var="local"/>
+    <fmt:message bundle="${local}" key="message.delete" var="delete"/>
 </head>
 <body>
 <c:set var="list" value="${requestScope.serviceList}"/>
@@ -36,7 +44,7 @@
                         <div class="index-caption">
                             <p>
                             <span>
-                                <a href="/ServletController?id=${element.id}&command=serviceDelete">Удалить<br></a>
+                                <a href="/ServletController?id=${element.id}&command=serviceDelete">${delete}<br></a>
                             </span>
                             </p>
                         </div>

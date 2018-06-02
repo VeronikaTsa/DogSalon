@@ -36,8 +36,8 @@
         </style>
     </head>
 <body>
-<jsp:include page="../head.jsp"/>
-<jsp:include page="../logo.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <jsp:include page="/ServletController" flush="true">
     <jsp:param name="command" value="questionNotAnswered" />
 </jsp:include>

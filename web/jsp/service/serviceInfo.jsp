@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Veronichka
@@ -10,6 +12,14 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <c:if test = "${empty sessionScope.language}">
+        <c:set var="language" value='en_US' scope="session"/>
+    </c:if>
+    <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+    <fmt:setLocale value="${language}"/>
+    <fmt:setBundle basename="text" var="local"/>
+    <fmt:message bundle="${local}" key="message.delete" var="delete"/>
+    <fmt:message bundle="${local}" key="message.edit" var="edit"/>
 
     <title>${param.name}</title>
     <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
@@ -33,10 +43,10 @@
 
 </head>
 <body>
-<jsp:include page="../head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 
 <div id="wrapper">
-    <jsp:include page="../logo.jsp"/>
+    <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
     <div class="permalink-post">
         <div class="permalink-image_post">
             <div class="permalink-caption_post">
@@ -48,12 +58,12 @@
                                    <a
                                            style="border-bottom: 1px solid #222;"
                                            href="<c:url value="/ServletController?id=${id}&command=serviceDelete"/>">
-                                       Удалить
+                                       ${delete}
                                    </a> /
                                    <a
                                            style="border-bottom: 1px solid #222;"
                                            href="<c:url value="/jsp/admin/serviceEdit.jsp?id=${id}&name=${name}&content=${content}&price=${price}&picture=${picture}"/>">
-                                       Изменить
+                                       ${edit}
                                    </a>
                                </span>
                             </p>

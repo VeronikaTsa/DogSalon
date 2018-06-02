@@ -1,9 +1,9 @@
 package com.tsarova.salon.entity;
 
-import java.util.List;
-
+/**
+ * @author Veronika Tsarova
+ */
 public class User implements Entity {
-    //сериализация
 
     private Long userId;
     private String email;
@@ -11,9 +11,6 @@ public class User implements Entity {
     private String password;
     private UserRole role;
     private UserContent userContent;
-    private List<Long> questionIdList;
-    private List<Long> registerIdList;
-    private List<Long> feedbackIdList;
 
     public User() {
     }
@@ -109,30 +106,6 @@ public class User implements Entity {
         this.userContent = userContent;
     }
 
-    public List<Long> getQuestionIdList() {
-        return questionIdList;
-    }
-
-    public void setQuestionIdList(List<Long> questionIdList) {
-        this.questionIdList = questionIdList;
-    }
-
-    public List<Long> getRegisterIdList() {
-        return registerIdList;
-    }
-
-    public void setRegisterIdList(List<Long> registerIdList) {
-        this.registerIdList = registerIdList;
-    }
-
-    public List<Long> getFeedbackIdList() {
-        return feedbackIdList;
-    }
-
-    public void setFeedbackIdList(List<Long> feedbackIdList) {
-        this.feedbackIdList = feedbackIdList;
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -156,31 +129,23 @@ public class User implements Entity {
 
         User user = (User) o;
 
-        if (!getUserId().equals(user.getUserId())) return false;
-        if (!getEmail().equals(user.getEmail())) return false;
-        if (!getLogin().equals(user.getLogin())) return false;
-        if (!getPassword().equals(user.getPassword())) return false;
+        if (getUserId() != null ? !getUserId().equals(user.getUserId()) : user.getUserId() != null) return false;
+        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
+        if (getLogin() != null ? !getLogin().equals(user.getLogin()) : user.getLogin() != null) return false;
+        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
+            return false;
         if (getRole() != user.getRole()) return false;
-        if (getUserContent() != null ? !getUserContent().equals(user.getUserContent()) : user.getUserContent() != null)
-            return false;
-        if (getQuestionIdList() != null ? !getQuestionIdList().equals(user.getQuestionIdList()) : user.getQuestionIdList() != null)
-            return false;
-        if (getRegisterIdList() != null ? !getRegisterIdList().equals(user.getRegisterIdList()) : user.getRegisterIdList() != null)
-            return false;
-        return getFeedbackIdList() != null ? getFeedbackIdList().equals(user.getFeedbackIdList()) : user.getFeedbackIdList() == null;
+        return getUserContent() != null ? getUserContent().equals(user.getUserContent()) : user.getUserContent() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getUserId().hashCode();
-        result = 31 * result + getEmail().hashCode();
-        result = 31 * result + getLogin().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + getRole().hashCode();
+        int result = getUserId() != null ? getUserId().hashCode() : 0;
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
         result = 31 * result + (getUserContent() != null ? getUserContent().hashCode() : 0);
-        result = 31 * result + (getQuestionIdList() != null ? getQuestionIdList().hashCode() : 0);
-        result = 31 * result + (getRegisterIdList() != null ? getRegisterIdList().hashCode() : 0);
-        result = 31 * result + (getFeedbackIdList() != null ? getFeedbackIdList().hashCode() : 0);
         return result;
     }
 
@@ -193,9 +158,6 @@ public class User implements Entity {
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 ", userContent=" + userContent +
-                ", questionIdList=" + questionIdList +
-                ", registerIdList=" + registerIdList +
-                ", feedbackIdList=" + feedbackIdList +
                 '}';
     }
 }

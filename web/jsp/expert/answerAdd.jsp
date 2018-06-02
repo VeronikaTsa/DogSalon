@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Veronichka
@@ -9,6 +10,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <html>
 <head>
+    <c:if test = "${empty sessionScope.language}">
+        <c:set var="language" value='en_US' scope="session"/>
+    </c:if>
+    <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+    <fmt:setLocale value="${language}"/>
+    <fmt:setBundle basename="text" var="local"/>
+    <fmt:message bundle="${local}" key="message.addAnswer" var="addAnswer"/>
     <c:choose>
         <c:when test="${not empty param.questionId}">
             <c:set var="questionAuthor" value="${param.questionAuthor}"/>
@@ -27,7 +35,7 @@
     </c:choose>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/cc.css">
-    <title>Add answer</title>
+    <title>${addAnswer}</title>
     <style>
         a.user {
             color:#222;
@@ -41,8 +49,8 @@
     </style>
 </head>
 <body>
-<jsp:include page="../head.jsp"/>
-<jsp:include page="../logo.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/head.jsp"/>
+<jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <a href="/ServletController?command=userInfo&userLogin=${param.questionAuthor}"
    class="user">
     <c:out value="${param.questionAuthor}"/>
@@ -61,7 +69,7 @@ ${param.questionCreateTime}
 <form action="/ServletController" method="post">
     <Input type="Text" name="answer" value="${answerContent}" width="100px" height="50px"/>
     <input type="hidden" name="questionId" value="${questionId}" />
-    <Input type="submit" value="Ответить"/>
+    <Input type="submit" value="${addAnswer}"/>
     <input type="hidden" name="command" value="answerAdd" />
 </form>
 
