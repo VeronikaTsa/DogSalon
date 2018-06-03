@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Optional;
+
 /**
  * @author Veronika Tsarova
  */
@@ -26,9 +28,9 @@ public class UserInfoCommand implements Command {
         CommandContent commandContent = new CommandContent(CommandContent.ResponseType.FORWARD, SOMEONE_INFO_PAGE);
 
         try {
-            User user = UserReceiver.getUserInfo(USER_LOGIN);
-            if (user != null) {
-                requestContent.setSessionAttribute("someone", user);
+            Optional<User> user = Optional.ofNullable(UserReceiver.getUserInfo(USER_LOGIN));
+            if (user.isPresent()) {
+                requestContent.setSessionAttribute("someone", user.get());
             }
         } catch (ReceiverException e) {
             logger.catching(Level.ERROR, e);

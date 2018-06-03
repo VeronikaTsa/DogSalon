@@ -62,14 +62,10 @@ public class QuestionAnswerRepository implements Repository<QuestionAnswer>{
                     String answerContent = String.valueOf(resultSet.getString("answer_content"));
                     Date answerCreateTime = new Date(resultSet.getTimestamp("answer_create_time").getTime());
                     String answerUserLogin = resultSet.getString("answer_user_login");
-                    Date answerLastUpdate = new Date(resultSet.getTimestamp("answer_create_time").getTime());
 
                     System.out.println("questionContent: " + questionContent);
                     QuestionAnswer questionAnswer = new QuestionAnswer(questionAnswerId, questionUserLogin,questionContent,
                             questionCreateTime, answerUserLogin, answerContent, answerCreateTime);
-                    if(answerLastUpdate != null){
-                        questionAnswer.setAnswerLastUpdate(answerLastUpdate);
-                    }
                     questionAnswerList.add(questionAnswer);                        //??????????????????
 
 

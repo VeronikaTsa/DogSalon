@@ -73,7 +73,7 @@ public class ServletUploader extends HttpServlet {
             sendResponse(commandContent, request, response);
         } catch (CommandException e) {
             logger.catching(Level.ERROR, e);
-            request.getRequestDispatcher("/jsp/error/error.jsp").include(request, response);
+            response.sendRedirect("/jsp/error/error.jsp");
         }
     }
 

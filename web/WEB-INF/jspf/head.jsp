@@ -90,7 +90,7 @@
         <c:choose>
             <c:when test="${not empty user}">
                 <li>
-                    <a href="/jsp/user/userInfo.jsp"> ${me} </a>
+                    <a href="/jsp/limited/userInfo.jsp"> ${me} </a>
                 </li>
                 <li>
                     <a href="/ServletController?command=logout">${logout}</a>

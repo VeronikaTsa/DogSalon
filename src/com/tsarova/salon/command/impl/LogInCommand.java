@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Optional;
+
 /**
  * @author Veronika Tsarova
  */
@@ -28,9 +30,9 @@ public class LogInCommand implements Command {
         CommandContent commandContent = new CommandContent(CommandContent.ResponseType.FORWARD, LOGIN_PAGE);
 
         try {
-            User user = UserReceiver.defineUser(USER_EMAIL, USER_PASSWORD);
-            if (user != null) {
-                requestContent.setSessionAttribute("user", user);
+            Optional<User> user = Optional.ofNullable(UserReceiver.defineUser(USER_EMAIL, USER_PASSWORD));
+            if (user.isPresent()) {
+                requestContent.setSessionAttribute("user", user.get());
                 commandContent = new CommandContent(CommandContent.ResponseType.REDIRECT, INDEX_PAGE);
             }
         } catch (ReceiverException e) {

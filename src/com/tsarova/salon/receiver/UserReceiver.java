@@ -1,17 +1,14 @@
 package com.tsarova.salon.receiver;
 
 import com.tsarova.salon.entity.*;
-import com.tsarova.salon.entity.Service;
 import com.tsarova.salon.exception.ReceiverException;
 import com.tsarova.salon.exception.RepositoryException;
 import com.tsarova.salon.repository.Repository;
-import com.tsarova.salon.repository.impl.ServiceRepository;
 import com.tsarova.salon.repository.impl.UserRepository;
 import com.tsarova.salon.specification.Specification;
 import com.tsarova.salon.specification.impl.UserSpecificationByEmail;
 import com.tsarova.salon.specification.impl.UserSpecificationByLogin;
 import com.tsarova.salon.specification.impl.UserSpecificationInfoByLogin;
-import com.tsarova.salon.specification.impl.UserSpecificationSignUp;
 import com.tsarova.salon.util.Encrypting;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -37,14 +34,14 @@ public class UserReceiver {
                     "|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|" +
                     "\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 
-    //поиск при логинации с find
+    //ok
     public static User defineUser(String email, String password) throws ReceiverException {
         User user = null;
         if (!email.isEmpty() && !password.isEmpty()) {
-            password = String.valueOf(Encrypting.md5Encrypt(password));
-            Repository userRepository = new UserRepository();
+            password = Encrypting.md5Encrypt(password);
+            Repository<User> userRepository = new UserRepository();
             try {
-                user = (User) userRepository.find(new User(email, password)); //может optional
+                user = userRepository.find(new User(email, password));
             } catch (RepositoryException e) {
                 logger.catching(Level.ERROR, e);
                 throw new ReceiverException(e);
@@ -55,21 +52,18 @@ public class UserReceiver {
 
     public static User createUser(String email, String password, String login) throws ReceiverException {
         User user = null;
-        try {
-            password = String.valueOf(Encrypting.md5Encrypt(password));
-
-            Repository userRepository = new UserRepository();
-            Specification userSpecificationSignUp = new UserSpecificationSignUp(email, password, login, UserRole.USER);
-
-            List<User> userList = null;
-            userList = userRepository.query(userSpecificationSignUp);
-            if (!userList.isEmpty()) {
-                System.out.println("userList: " + userList);
-                user = (User) userList.remove(0);
+        if (!email.isEmpty() && !password.isEmpty() && !login.isEmpty()) {
+            try {
+                password = Encrypting.md5Encrypt(password);
+                user = new User(email, password, login, UserRole.USER);
+                Repository<User> userRepository = new UserRepository();
+                if (userRepository.add(user)) {
+                    logger.log(Level.DEBUG, "User " + email + " added");
+                }
+            } catch (RepositoryException e) {
+                logger.catching(Level.ERROR, e);
+                throw new ReceiverException(e);
             }
-        } catch (RepositoryException e) {
-            logger.catching(Level.ERROR, e);
-            throw new ReceiverException(e);
         }
         return user;
     }
@@ -117,30 +111,22 @@ public class UserReceiver {
 
     public static boolean createUser(String email, String login, UserRole userRole) throws ReceiverException {
         User user;
-
-        if (email != null && login != null && email.matches(EMAIL_REGEX) && login.length() > 3) {
-            System.out.println("в полях не пусто и мэил норм");
-            if (!ifLoginExist(login)) {//??????????????
-
-                Repository userRepository = new UserRepository();
-                Specification userSpecificationSignUp = new UserSpecificationSignUp(email,
-                        String.valueOf(Encrypting.md5Encrypt(String.valueOf(sendEmail(email)))), login, userRole);
-
-                List<User> userList = null;
+        if (!email.isEmpty() && !login.isEmpty() && email.matches(EMAIL_REGEX) && login.length() > 3) {
+            if (!ifLoginExist(login)) {
+                String password = Encrypting.md5Encrypt(String.valueOf(sendEmail(email)));
+                user = new User(email, password, login, userRole);
+                Repository<User> userRepository = new UserRepository();
                 try {
-                    userList = userRepository.query(userSpecificationSignUp);
+                    if (userRepository.add(user)) {
+                        logger.log(Level.DEBUG, userRole + " " + email + " added");
+                        return true;
+                    }
                 } catch (RepositoryException e) {
                     logger.catching(Level.ERROR, e);
                     throw new ReceiverException(e);
                 }
-                if (!userList.isEmpty()) {
-                    System.out.println("userList: " + userList);
-                    user = (User) userList.remove(0);
-                    return true;
-                }
             }
         }
-        System.out.println("может в полях пусто или мэил не норм или такой чел есть в бд");
         return false;
     }
 
@@ -178,42 +164,87 @@ public class UserReceiver {
                                      String sexToEdit, String oldPassword, String newPassword,
                                      User sessionUser) throws ReceiverException {
         System.out.println(sexToEdit);
-        if (sessionUser.getUserContent() != null) {
-            if (!(sessionUser.getEmail().equals(emailToEdit) && sessionUser.getLogin().equals(loginToEdit) &&
-                    sessionUser.getUserContent().getFirstName().equals(firstNameToEdit) &&
-                    sessionUser.getUserContent().getLastName().equals(lastNameToEdit) &&
-                    ((sessionUser.getUserContent().getBirthday() != null &&
-                            sessionUser.getUserContent().getBirthday().toString().equals(birthdayToEdit)) ||
-                            (sessionUser.getUserContent().getBirthday() == null &&
-                                    birthdayToEdit.isEmpty())) &&
-                    sessionUser.getUserContent().getTelephone().equals(telephoneToEdit) &&
-                    ((sessionUser.getUserContent().getSex() != null &&
-                            sessionUser.getUserContent().getSex().getValue().equals(sexToEdit)) ||
-                            (sessionUser.getUserContent().getSex() == null &&
-                                    "none".equals(sexToEdit)))) ||
-                    (!oldPassword.isEmpty() && !newPassword.isEmpty())) {
-                if (!emailToEdit.isEmpty() && !loginToEdit.isEmpty()) {
-                    Repository<User> userRepository = new UserRepository();
-                    User user;
-                    if(firstNameToEdit.isEmpty() &&
-                            lastNameToEdit.isEmpty() &&
-                            telephoneToEdit.isEmpty() &&
-                            birthdayToEdit.isEmpty() &&
-                            "none".equals(sexToEdit)){
-                        user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword());
-                    } else
-                    if (sexToEdit.equals("none")) {
-                        if (!birthdayToEdit.isEmpty()) {
-                            user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
-                                    new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
-                                            Date.valueOf(birthdayToEdit)));
-                        } else {
-                            user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
-                                    new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit));
-                        }
-                        System.out.println("sex is none so: \n" + user);
+        if (!emailToEdit.isEmpty() && !loginToEdit.isEmpty()) {
+            if (sessionUser.getUserContent() != null) {
+                if (!(sessionUser.getEmail().equals(emailToEdit) && sessionUser.getLogin().equals(loginToEdit) &&
+                        (sessionUser.getUserContent().getFirstName() != null &&
+                                sessionUser.getUserContent().getFirstName().equals(firstNameToEdit)) &&
+                        (sessionUser.getUserContent().getLastName() != null &&
+                                sessionUser.getUserContent().getLastName().equals(lastNameToEdit)) &&
+                        ((sessionUser.getUserContent().getBirthday() != null &&
+                                sessionUser.getUserContent().getBirthday().toString().equals(birthdayToEdit)) ||
+                                (sessionUser.getUserContent().getBirthday() == null &&
+                                        birthdayToEdit.isEmpty())) &&
+                        sessionUser.getUserContent().getTelephone().equals(telephoneToEdit) &&
+                        ((sessionUser.getUserContent().getSex() != null &&
+                                sessionUser.getUserContent().getSex().getValue().equals(sexToEdit)) ||
+                                (sessionUser.getUserContent().getSex() == null &&
+                                        "none".equals(sexToEdit)))) ||
+                        (!oldPassword.isEmpty() && !newPassword.isEmpty())) {
+                    if (!emailToEdit.isEmpty() && !loginToEdit.isEmpty()) {
+                        Repository<User> userRepository = new UserRepository();
+                        User user;
+                        if (firstNameToEdit.isEmpty() &&
+                                lastNameToEdit.isEmpty() &&
+                                telephoneToEdit.isEmpty() &&
+                                birthdayToEdit.isEmpty() &&
+                                "none".equals(sexToEdit)) {
+                            user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword());
+                        } else if (sexToEdit.equals("none")) {
+                            if (!birthdayToEdit.isEmpty()) {
+                                user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
+                                        new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
+                                                Date.valueOf(birthdayToEdit)));
+                            } else {
+                                user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
+                                        new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit));
+                            }
+                            System.out.println("sex is none so: \n" + user);
 
-                    } else {
+                        } else {
+                            if (!birthdayToEdit.isEmpty()) {
+                                user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
+                                        new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
+                                                Date.valueOf(birthdayToEdit), UserSex.valueOf(sexToEdit.toUpperCase())));
+                            } else {
+                                user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
+                                        new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
+                                                UserSex.valueOf(sexToEdit.toUpperCase())));
+                            }
+                        }
+
+                        if (!oldPassword.isEmpty() &&
+                                !newPassword.isEmpty()) {
+                            if (String.valueOf(Encrypting.md5Encrypt(oldPassword)).equals(sessionUser.getPassword()) &&
+                                    !newPassword.equals(oldPassword)) {
+                                user.setPassword(String.valueOf(Encrypting.md5Encrypt(newPassword)));
+                            } else {
+                                return false;
+                            }
+                        }
+                        try {
+                            if (userRepository.update(user)) {
+                                sessionUser.setLogin(user.getLogin());
+                                sessionUser.setEmail(user.getEmail());
+                                sessionUser.setPassword(user.getPassword());
+                                sessionUser.setUserContent(user.getUserContent());
+                                return true;
+                            }
+                        } catch (RepositoryException e) {
+                            logger.catching(Level.ERROR, e);
+                            throw new ReceiverException(e);
+                        }
+                    }
+                }
+            } else {
+                Repository<User> userRepository = new UserRepository();
+                User user;
+                System.out.println("У кого-то нет контента");
+                if (!"none".equals(sexToEdit)) {
+                    System.out.println("пол не пустой");
+                    if (!firstNameToEdit.isEmpty() || !lastNameToEdit.isEmpty() || !telephoneToEdit.isEmpty() ||
+                            !birthdayToEdit.isEmpty()) {
+                        System.out.println("У кого-то не было контента и вот что-то появилось с измененным полом");
                         if (!birthdayToEdit.isEmpty()) {
                             user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
                                     new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
@@ -223,93 +254,65 @@ public class UserReceiver {
                                     new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
                                             UserSex.valueOf(sexToEdit.toUpperCase())));
                         }
+                    } else {
+                        System.out.println("только пол не пустой, остального из контента нет");
+                        user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
+                                new UserContent(UserSex.valueOf(sexToEdit.toUpperCase())));
+                    }
+                } else if ((!firstNameToEdit.isEmpty() || !lastNameToEdit.isEmpty() || !telephoneToEdit.isEmpty() ||
+                        !birthdayToEdit.isEmpty()) && "none".equals(sexToEdit)) {
+                    System.out.println("У кого-то не было контента и вот что-то появилось без измененного пола");
+                    if (!birthdayToEdit.isEmpty()) {
+                        user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
+                                new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
+                                        Date.valueOf(birthdayToEdit)));
+                    } else {
+                        user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
+                                new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit));
                     }
 
-                    if (!oldPassword.isEmpty() &&
-                            !newPassword.isEmpty()) {
-                        if (String.valueOf(Encrypting.md5Encrypt(oldPassword)).equals(sessionUser.getPassword()) &&
-                                !newPassword.equals(oldPassword)) {
-                            user.setPassword(String.valueOf(Encrypting.md5Encrypt(newPassword)));
-                        } else {
-                            return false;
-                        }
-                    }
-                    try {
-                        if (userRepository.update(user)) {
-                            sessionUser.setLogin(user.getLogin());
-                            sessionUser.setEmail(user.getEmail());
-                            sessionUser.setPassword(user.getPassword());
-                            sessionUser.setUserContent(user.getUserContent());
-                            return true;
-                        }
-                    } catch (RepositoryException e) {
-                        logger.catching(Level.ERROR, e);
-                        throw new ReceiverException(e);
-                    }
-                }
-            }
-        } else {
-            Repository<User> userRepository = new UserRepository();
-            User user;
-            System.out.println("У кого-то нет контента");
-            if ((!firstNameToEdit.isEmpty() || !lastNameToEdit.isEmpty() || !telephoneToEdit.isEmpty() ||
-                    !birthdayToEdit.isEmpty()) && !"none".equals(sexToEdit)) {
-                System.out.println("У кого-то не было контента и вот что-то появилось с измененным полом");
-                if (!birthdayToEdit.isEmpty()) {
-                    user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
-                            new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
-                                    Date.valueOf(birthdayToEdit), UserSex.valueOf(sexToEdit.toUpperCase())));
+                } else if (!emailToEdit.isEmpty() && !loginToEdit.isEmpty() &&
+                        sessionUser.getEmail().equals(emailToEdit) && sessionUser.getLogin().equals(loginToEdit) &&
+                        oldPassword.isEmpty() && newPassword.isEmpty()) {
+                    System.out.println("ничего нового не появилось");
+                    return true;
+                    //user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword());
+                } else if (!emailToEdit.isEmpty() && !loginToEdit.isEmpty() &&
+                        (!sessionUser.getEmail().equals(emailToEdit) || !sessionUser.getLogin().equals(loginToEdit) ||
+                                !oldPassword.isEmpty() && !newPassword.isEmpty())) {
+                    System.out.println("Либо изменился логин, либо мэил,либо пароль");
+                    user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword());
                 } else {
-                    user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
-                            new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
-                                    UserSex.valueOf(sexToEdit.toUpperCase())));
-                }
-            } else if ((!firstNameToEdit.isEmpty() || !lastNameToEdit.isEmpty() || !telephoneToEdit.isEmpty() ||
-                    !birthdayToEdit.isEmpty()) && "none".equals(sexToEdit)) {
-                System.out.println("У кого-то не было контента и вот что-то появилось без измененного пола");
-                if (!birthdayToEdit.isEmpty()) {
-                    user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
-                            new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit,
-                                    Date.valueOf(birthdayToEdit)));
-                } else {
-                    user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword(),
-                            new UserContent(firstNameToEdit, lastNameToEdit, telephoneToEdit));
-                }
-
-            } else if (!emailToEdit.isEmpty() && !loginToEdit.isEmpty() &&
-                    (!(sessionUser.getEmail().equals(emailToEdit) && sessionUser.getLogin().equals(loginToEdit)) ||
-                            !oldPassword.isEmpty() && !newPassword.isEmpty())) {
-                System.out.println("ничего не появилось");
-                user = new User(id, emailToEdit, loginToEdit, sessionUser.getPassword());
-            } else {
-                return false;
-            }
-
-            System.out.println("перед паролями");
-
-            if (!oldPassword.isEmpty() &&
-                    !newPassword.isEmpty()) {
-                System.out.println("оба поля не пустые");
-                if (String.valueOf(Encrypting.md5Encrypt(oldPassword)).equals(sessionUser.getPassword()) &&
-                        !newPassword.equals(oldPassword)) {
-                    user.setPassword(String.valueOf(Encrypting.md5Encrypt(newPassword)));
-                    System.out.println("поместили новый пароль");
-                } else {
-                    System.out.println("поместили новый пароль");
+                    System.out.println("возможно, нужное поле пустое");
                     return false;
                 }
-            }
-            try {
-                if (userRepository.update(user)) {
-                    sessionUser.setLogin(user.getLogin());
-                    sessionUser.setEmail(user.getEmail());
-                    sessionUser.setPassword(user.getPassword());
-                    sessionUser.setUserContent(user.getUserContent());
-                    return true;
+
+                System.out.println("перед паролями");
+
+                if (!oldPassword.isEmpty() &&
+                        !newPassword.isEmpty()) {
+                    System.out.println("оба поля не пустые");
+                    if (Encrypting.md5Encrypt(oldPassword).equals(sessionUser.getPassword()) &&
+                            !newPassword.equals(oldPassword)) {
+                        user.setPassword(Encrypting.md5Encrypt(newPassword));
+                        System.out.println("поместили новый пароль");
+                    } else {
+                        System.out.println("не поместили новый пароль");
+                        return false;
+                    }
                 }
-            } catch (RepositoryException e) {
-                logger.catching(Level.ERROR, e);
-                throw new ReceiverException(e);
+                try {
+                    if (userRepository.update(user)) {
+                        sessionUser.setLogin(user.getLogin());
+                        sessionUser.setEmail(user.getEmail());
+                        sessionUser.setPassword(user.getPassword());
+                        sessionUser.setUserContent(user.getUserContent());
+                        return true;
+                    }
+                } catch (RepositoryException e) {
+                    logger.catching(Level.ERROR, e);
+                    throw new ReceiverException(e);
+                }
             }
         }
         return false;
@@ -317,8 +320,6 @@ public class UserReceiver {
 
     public static User getUserInfo(String login) throws ReceiverException {
         Repository userRepository = new UserRepository();
-
-
         Specification userSpecificationInfoByLogin = new UserSpecificationInfoByLogin(login);
         try {
             List<User> userList = userRepository.query(userSpecificationInfoByLogin); //может optional

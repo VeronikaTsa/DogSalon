@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Optional;
+
 /**
  * @author Veronika Tsarova
  */
@@ -32,9 +34,10 @@ public class SignUpContinueCommand implements Command {
 
         if (CODE_TO_COMPARE.equals(SIGN_UP_CODE)) {
             try {
-                User user = UserReceiver.createUser(USER_SESSION_EMAIL, USER_SESSION_PASSWORD, USER_SESSION_LOGIN);
-                if (user != null) {
-                    requestContent.setSessionAttribute("user", user);
+                Optional<User> user = Optional.ofNullable(UserReceiver
+                        .createUser(USER_SESSION_EMAIL, USER_SESSION_PASSWORD, USER_SESSION_LOGIN));
+                if (user.isPresent()) {
+                    requestContent.setSessionAttribute("user", user.get());
                     commandContent = new CommandContent(CommandContent.ResponseType.REDIRECT, INDEX_PAGE);
                 } else {
                     requestContent.removeSessionAttribute("email");

@@ -69,7 +69,6 @@ public class UserSpecificationInfoByLogin implements Specification<User> {
                     if (resultSetUserContent.getString("sex") != null) {
                         userContent.setSex(UserSex.valueOf(resultSetUserContent.getString("sex").toUpperCase()));
                     }
-
                     user.setUserContent(userContent);
                 }
                 userList.add(user);

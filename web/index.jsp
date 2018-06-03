@@ -24,7 +24,7 @@
 </head>
 <body>
 
-<jsp:include page="WEB-INF/jspf/head.jsp"/>
+<jsp:include page="/WEB-INF/jspf/head.jsp"/>
 
 <div id="wrapper">
   <jsp:include page="/WEB-INF/jspf/logo.jsp"/>

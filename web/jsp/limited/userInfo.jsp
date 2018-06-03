@@ -44,7 +44,7 @@
         <c:if test="${not empty sessionScope.user}">
             <a
                     style="border-bottom: 1px solid #222; text-decoration:none; color:#222;"
-                    href="<c:url value="/jsp/user/userEdit.jsp"/>">
+                    href="<c:url value="/jsp/limited/userEdit.jsp"/>">
                 ${edit}
             </a>
         </c:if>

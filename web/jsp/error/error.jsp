@@ -20,6 +20,8 @@
     <fmt:message bundle="${local}" key="message.error" var="error" />
 </head>
 <body>
+<jsp:include page="/WEB-INF/jspf/head.jsp"/>
+<jsp:include page="/WEB-INF/jspf/logo.jsp"/>
 <div style="text-align: center">
     ${error}
 </div>
