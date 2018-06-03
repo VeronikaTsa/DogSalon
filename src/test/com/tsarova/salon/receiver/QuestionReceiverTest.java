@@ -3,7 +3,7 @@ package test.com.tsarova.salon.receiver;
 import com.tsarova.salon.entity.User;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.ReceiverException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.receiver.QuestionReceiver;
 import com.tsarova.salon.repository.SQLQuery;
 import org.apache.logging.log4j.Level;
@@ -51,7 +51,7 @@ public class QuestionReceiverTest {
         Connection connection;
         PreparedStatement statementAddQuestion, statementLastId;
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statementAddQuestion = connection.prepareStatement(sqlAddQuestion);
             statementAddQuestion.setString(1, String.valueOf(user.getUserId()));
             statementAddQuestion.setString(2, "New content");

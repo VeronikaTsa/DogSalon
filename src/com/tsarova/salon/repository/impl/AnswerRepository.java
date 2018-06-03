@@ -3,7 +3,7 @@ package com.tsarova.salon.repository.impl;
 import com.tsarova.salon.entity.Answer;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.SQLQuery;
 import com.tsarova.salon.specification.Specification;
@@ -29,7 +29,7 @@ public class AnswerRepository implements Repository<Answer> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_REPLACE_ANSWER);
             statement.setString(1, answer.getId().toString());
             statement.setString(2, answer.getUserId().toString());
@@ -42,7 +42,7 @@ public class AnswerRepository implements Repository<Answer> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;
@@ -55,7 +55,7 @@ public class AnswerRepository implements Repository<Answer> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_DELETE_ANSWER);
             statement.setString(1, answer.getId().toString());
             if (statement.executeUpdate() > 0) {
@@ -66,7 +66,7 @@ public class AnswerRepository implements Repository<Answer> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;

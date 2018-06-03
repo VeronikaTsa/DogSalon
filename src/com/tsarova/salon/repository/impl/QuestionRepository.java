@@ -3,7 +3,7 @@ package com.tsarova.salon.repository.impl;
 import com.tsarova.salon.entity.Question;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.SQLQuery;
 import com.tsarova.salon.specification.Specification;
@@ -28,7 +28,7 @@ public class QuestionRepository implements Repository<Question> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_ADD_QUESTION);
             statement.setString(1, String.valueOf(question.getUserId()));
             statement.setString(2, question.getContent());
@@ -40,7 +40,7 @@ public class QuestionRepository implements Repository<Question> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;
@@ -53,7 +53,7 @@ public class QuestionRepository implements Repository<Question> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_DELETE_QUESTION);
             statement.setString(1, question.getId().toString());
             if (statement.executeUpdate() > 0) {
@@ -64,7 +64,7 @@ public class QuestionRepository implements Repository<Question> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;
@@ -89,7 +89,7 @@ public class QuestionRepository implements Repository<Question> {
         ResultSet resultSet;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_FIND_NOT_ANSWERED_QUESTIONS);
             resultSet = statement.executeQuery();
             while (!resultSet.isLast()) {
@@ -106,7 +106,7 @@ public class QuestionRepository implements Repository<Question> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return questionList;

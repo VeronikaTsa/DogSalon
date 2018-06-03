@@ -3,7 +3,7 @@ package com.tsarova.salon.repository.impl;
 import com.tsarova.salon.entity.Service;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.SQLQuery;
 import com.tsarova.salon.specification.Specification;
@@ -28,7 +28,7 @@ public class ServiceRepository implements Repository<Service> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_ADD_SERVICE);
             statement.setString(1, service.getName());
             statement.setString(2, service.getContent());
@@ -41,7 +41,7 @@ public class ServiceRepository implements Repository<Service> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;
@@ -54,7 +54,7 @@ public class ServiceRepository implements Repository<Service> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_DELETE_SERVICE);
             statement.setString(1, service.getId().toString());
             if (statement.executeUpdate() > 0) {
@@ -65,7 +65,7 @@ public class ServiceRepository implements Repository<Service> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;
@@ -78,7 +78,7 @@ public class ServiceRepository implements Repository<Service> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_UPDATE_SERVICE);
             statement.setString(1, service.getName());
             statement.setString(2, service.getContent());
@@ -93,7 +93,7 @@ public class ServiceRepository implements Repository<Service> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;
@@ -113,7 +113,7 @@ public class ServiceRepository implements Repository<Service> {
         ResultSet resultSet;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
 
             statement = connection.prepareStatement(SQL_FIND_ALL_SERVICES);
             resultSet = statement.executeQuery();
@@ -132,7 +132,7 @@ public class ServiceRepository implements Repository<Service> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return serviceList;

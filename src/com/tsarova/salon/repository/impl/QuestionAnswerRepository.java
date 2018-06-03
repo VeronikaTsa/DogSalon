@@ -3,7 +3,7 @@ package com.tsarova.salon.repository.impl;
 import com.tsarova.salon.entity.QuestionAnswer;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.SQLQuery;
 import com.tsarova.salon.specification.Specification;
@@ -50,7 +50,7 @@ public class QuestionAnswerRepository implements Repository<QuestionAnswer> {
         ResultSet resultSet;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_FIND_QUESTIONS_ANSWERS);
             resultSet = statement.executeQuery();
             while (!resultSet.isLast()) {
@@ -72,7 +72,7 @@ public class QuestionAnswerRepository implements Repository<QuestionAnswer> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return questionAnswerList;

@@ -3,7 +3,7 @@ package com.tsarova.salon.specification.impl;
 import com.tsarova.salon.entity.User;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.repository.SQLQuery;
 import com.tsarova.salon.specification.Specification;
 import org.apache.logging.log4j.Level;
@@ -44,7 +44,7 @@ public class UserSpecificationByEmailOrLogin implements Specification<User> {
         ResultSet resultSetUser;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             if (requiredParameterType == RequiredParameterType.LOGIN) {
                 statement = connection.prepareStatement(SQL_IF_EXIST_LOGIN);
                 statement.setString(1, desiredParameter);
@@ -61,7 +61,7 @@ public class UserSpecificationByEmailOrLogin implements Specification<User> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return userList;

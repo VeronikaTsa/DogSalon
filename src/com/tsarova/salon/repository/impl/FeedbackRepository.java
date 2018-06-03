@@ -1,9 +1,10 @@
 package com.tsarova.salon.repository.impl;
 
+import com.tsarova.salon.conpool.ConnectionPool;
+import com.tsarova.salon.conpool.ProxyConnection;
 import com.tsarova.salon.entity.Feedback;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.SQLQuery;
 import com.tsarova.salon.specification.Specification;
@@ -24,11 +25,11 @@ public class FeedbackRepository implements Repository<Feedback> {
     @Override
     public boolean add(Feedback feedback) throws RepositoryException {
         final String SQL_ADD_FEEDBACK = SQLQuery.ADD_FEEDBACK;
-        Connection connection = null;
+        ProxyConnection connection = null;
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_ADD_FEEDBACK);
             statement.setString(1, String.valueOf(feedback.getUserId()));
             statement.setString(2, feedback.getContent());
@@ -40,7 +41,7 @@ public class FeedbackRepository implements Repository<Feedback> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().returnConnection(connection);
             }
         }
         return false;
@@ -49,11 +50,11 @@ public class FeedbackRepository implements Repository<Feedback> {
     @Override
     public boolean remove(Feedback feedback) throws RepositoryException {
         final String SQL_DELETE_FEEDBACK = SQLQuery.DELETE_FEEDBACK;
-        Connection connection = null;
+        ProxyConnection connection = null;
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_DELETE_FEEDBACK);
             statement.setString(1, feedback.getId().toString());
             if (statement.executeUpdate() > 0) {
@@ -64,7 +65,7 @@ public class FeedbackRepository implements Repository<Feedback> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().returnConnection(connection);
             }
         }
         return false;
@@ -84,12 +85,12 @@ public class FeedbackRepository implements Repository<Feedback> {
     public List<Feedback> findAll() throws RepositoryException {
         final String SQL_FIND_ALL_FEEDBACKS = SQLQuery.FIND_FEEDBACKS;
         List<Feedback> feedbackList = new ArrayList<>();
-        Connection connection = null;
+        ProxyConnection connection = null;
         PreparedStatement statement;
         ResultSet resultSet;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_FIND_ALL_FEEDBACKS);
             resultSet = statement.executeQuery();
             while (!resultSet.isLast()) {
@@ -106,7 +107,7 @@ public class FeedbackRepository implements Repository<Feedback> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().returnConnection(connection);
             }
         }
         return feedbackList;

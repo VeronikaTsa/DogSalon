@@ -6,7 +6,7 @@ import com.tsarova.salon.entity.User;
 import com.tsarova.salon.entity.UserContent;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.SQLQuery;
 import com.tsarova.salon.specification.Specification;
@@ -30,7 +30,7 @@ public class UserRepository implements Repository<User> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_CREATE_USER);
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPassword());
@@ -53,7 +53,7 @@ public class UserRepository implements Repository<User> {
             throw new RepositoryException();
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;
@@ -74,7 +74,7 @@ public class UserRepository implements Repository<User> {
         PreparedStatement statement;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(SQL_UPDATE_USER);
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getEmail());
@@ -119,7 +119,7 @@ public class UserRepository implements Repository<User> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return false;
@@ -138,7 +138,7 @@ public class UserRepository implements Repository<User> {
         ResultSet resultSetUser;
 
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statementUser = connection.prepareStatement(SQL_DEFINE_USER);
             statementUser.setString(1, user.getEmail());
             statementUser.setString(2, user.getPassword());
@@ -176,7 +176,7 @@ public class UserRepository implements Repository<User> {
             throw new RepositoryException(e);
         } finally {
             if (connection != null) {
-                ConnectionPoolImpl.getInstance().closeConnection(connection);
+                ConnectionPool.getInstance().closeConnection(connection);
             }
         }
         return null;

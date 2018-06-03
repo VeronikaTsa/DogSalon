@@ -3,7 +3,7 @@ package test.com.tsarova.salon.repository.impl;
 import com.tsarova.salon.entity.Question;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
-import com.tsarova.salon.pool.ConnectionPoolImpl;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.SQLQuery;
 import com.tsarova.salon.repository.impl.QuestionRepository;
@@ -52,7 +52,7 @@ public class QuestionRepositoryTest {
         Connection connection;
         PreparedStatement statementAddQuestion, statementLastId;
         try {
-            connection = ConnectionPoolImpl.getInstance().getConnection();
+            connection = ConnectionPool.getInstance().getConnection();
             statementAddQuestion = connection.prepareStatement(sqlAddQuestion);
             statementAddQuestion.setString(1, String.valueOf(question.getUserId()));
             statementAddQuestion.setString(2, question.getContent());
