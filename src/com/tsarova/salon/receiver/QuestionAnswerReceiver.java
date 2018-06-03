@@ -11,14 +11,17 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class QuestionAnswerReceiver {
     private static Logger logger = LogManager.getLogger();
 
     public static List<QuestionAnswer> receiveQuestionAnswerList()throws ReceiverException {
         List<QuestionAnswer> questionAnswerList;
-        Repository questionAnswerRepository = new QuestionAnswerRepository();
+        Repository<QuestionAnswer> questionAnswerRepository = new QuestionAnswerRepository();
         try {
-            questionAnswerList = questionAnswerRepository.findAll(); //может optional
+            questionAnswerList = questionAnswerRepository.findAll();
         } catch (RepositoryException e) {
             logger.catching(Level.ERROR, e);
             throw new ReceiverException(e);

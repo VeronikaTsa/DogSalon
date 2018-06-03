@@ -6,8 +6,7 @@ import com.tsarova.salon.exception.RepositoryException;
 import com.tsarova.salon.repository.Repository;
 import com.tsarova.salon.repository.impl.UserRepository;
 import com.tsarova.salon.specification.Specification;
-import com.tsarova.salon.specification.impl.UserSpecificationByEmail;
-import com.tsarova.salon.specification.impl.UserSpecificationByLogin;
+import com.tsarova.salon.specification.impl.UserSpecificationByEmailOrLogin;
 import com.tsarova.salon.specification.impl.UserSpecificationInfoByLogin;
 import com.tsarova.salon.util.Encrypting;
 import org.apache.logging.log4j.Level;
@@ -18,10 +17,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.sql.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 public class UserReceiver {
     private static Logger logger = LogManager.getLogger();
@@ -50,6 +46,7 @@ public class UserReceiver {
         return user;
     }
 
+    //ok
     public static User createUser(String email, String password, String login) throws ReceiverException {
         User user = null;
         if (!email.isEmpty() && !password.isEmpty() && !login.isEmpty()) {
@@ -109,6 +106,7 @@ public class UserReceiver {
         return 0;
     }
 
+    //ok
     public static boolean createUser(String email, String login, UserRole userRole) throws ReceiverException {
         User user;
         if (!email.isEmpty() && !login.isEmpty() && email.matches(EMAIL_REGEX) && login.length() > 3) {
@@ -128,35 +126,6 @@ public class UserReceiver {
             }
         }
         return false;
-    }
-
-    private static boolean ifUserExist(String email) throws ReceiverException {
-        Repository userRepository = new UserRepository();
-        Specification userSpecificationByEmail = new UserSpecificationByEmail(email);
-        return ifExist(email, userSpecificationByEmail);
-
-    }
-
-    private static boolean ifLoginExist(String login) throws ReceiverException {
-        Specification userSpecificationByLogin = new UserSpecificationByLogin(login);
-        return ifExist(login, userSpecificationByLogin);
-    }
-
-    private static boolean ifExist(String checkingName, Specification specification) throws ReceiverException {
-        Repository userRepository = new UserRepository();
-        try {
-            List<User> userList = userRepository.query(specification); //может optional
-            if (userList != null) {
-                System.out.println("такого в бд нет");
-                return false;
-            } else {
-                System.out.println("Такой есть в бд");
-            }
-        } catch (RepositoryException e) {
-            logger.catching(Level.ERROR, e);
-            throw new ReceiverException(e);
-        }
-        return true;
     }
 
     public static boolean updateUser(Long id, String emailToEdit, String loginToEdit, String firstNameToEdit,
@@ -319,23 +288,45 @@ public class UserReceiver {
     }
 
     public static User getUserInfo(String login) throws ReceiverException {
-        Repository userRepository = new UserRepository();
-        Specification userSpecificationInfoByLogin = new UserSpecificationInfoByLogin(login);
+        Repository<User> userRepository = new UserRepository();
+        Specification<User> userSpecificationInfoByLogin = new UserSpecificationInfoByLogin(login);
         try {
             List<User> userList = userRepository.query(userSpecificationInfoByLogin); //может optional
             if (!userList.isEmpty()) {
-                System.out.println("всё отл, получили инфу");
                 return userList.remove(0);//???????????   ой ли
 
-            } else {
-                System.out.println("беда-беда, не получили юзера");
             }
         } catch (RepositoryException e) {
             logger.catching(Level.ERROR, e);
             throw new ReceiverException(e);
         }
         return null; //optional
+    }
 
+    private static boolean ifUserExist(String email) throws ReceiverException {
+        Specification<User> userSpecificationByEmailOrLogin = new UserSpecificationByEmailOrLogin(email,
+                UserSpecificationByEmailOrLogin.RequiredParameterType.EMAIL);
+        return ifExist(userSpecificationByEmailOrLogin);
+    }
+
+    private static boolean ifLoginExist(String login) throws ReceiverException {
+        Specification<User> userSpecificationByEmailOrLogin = new UserSpecificationByEmailOrLogin(login,
+                UserSpecificationByEmailOrLogin.RequiredParameterType.LOGIN);
+        return ifExist(userSpecificationByEmailOrLogin);
+    }
+
+    private static boolean ifExist(Specification specification) throws ReceiverException {
+        Repository<User> userRepository = new UserRepository();
+        try {
+            Optional<List<User>> userList = Optional.ofNullable(userRepository.query(specification));
+            if(!userList.isPresent()){
+                return true;
+            }
+        } catch (RepositoryException e) {
+            logger.catching(Level.ERROR, e);
+            throw new ReceiverException(e);
+        }
+        return false;
     }
 
     private static int sendEmail(String emailToSend) {

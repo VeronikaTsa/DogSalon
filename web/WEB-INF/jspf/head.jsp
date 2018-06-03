@@ -1,5 +1,3 @@
-<%@ page import="java.net.URLEncoder" %>
-<%@ page import="java.net.URLDecoder" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
@@ -62,6 +60,7 @@
     <fmt:message bundle="${local}" key="message.expertPanelHead" var="expertPanel" />
 </head>
 <body>
+${sessionScope.language}
 <nav id="menu">
     <ul>
         <li>
@@ -110,12 +109,12 @@
             <c:choose>
                 <c:when test="${sessionScope.language.equals('ru_RU')}">
 
-                        <a href="${pageContext.request.requestURL}?language=en_US&<ctg:decode>${pageContext.request.queryString}</ctg:decode>"> ENGLISH</a>
+                        <a  href="${pageContext.request.requestURL}?language=en_US&<ctg:decode>${pageContext.request.queryString}</ctg:decode>"> ENGLISH</a>
 
                 </c:when>
                 <c:otherwise>
 
-                    <a href="${pageContext.request.requestURL}?language=ru_RU&<ctg:decode>${pageContext.request.queryString}</ctg:decode>">РУССКИЙ</a>
+                    <a  href="${pageContext.request.requestURL}?language=ru_RU&<ctg:decode>${pageContext.request.queryString}</ctg:decode>">РУССКИЙ</a>
                 </c:otherwise>
             </c:choose>
         </li>

@@ -1,6 +1,5 @@
 package com.tsarova.salon.repository.impl;
 
-import com.tsarova.salon.entity.Question;
 import com.tsarova.salon.entity.QuestionAnswer;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
@@ -16,7 +15,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionAnswerRepository implements Repository<QuestionAnswer>{
+/**
+ * @author Veronika Tsarova
+ */
+public class QuestionAnswerRepository implements Repository<QuestionAnswer> {
     private static Logger logger = LogManager.getLogger();
 
     @Override
@@ -41,42 +43,37 @@ public class QuestionAnswerRepository implements Repository<QuestionAnswer>{
 
     @Override
     public List<QuestionAnswer> findAll() throws RepositoryException {
-        final String SQL_FIND_ALL_QUESTIONS = SQLQuery.FIND_QUESTIONS_ANSWERS;
+        final String SQL_FIND_QUESTIONS_ANSWERS = SQLQuery.FIND_QUESTIONS_ANSWERS;
         List<QuestionAnswer> questionAnswerList = new ArrayList<>();
         Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        PreparedStatement statement;
+        ResultSet resultSet;
 
         try {
             connection = ConnectionPoolImpl.getInstance().getConnection();
-
-            statement = connection.prepareStatement(SQL_FIND_ALL_QUESTIONS);
+            statement = connection.prepareStatement(SQL_FIND_QUESTIONS_ANSWERS);
             resultSet = statement.executeQuery();
-            System.out.println("МЫ ХОТЯ БЫ ЗДЕСЬ");
-            while (!resultSet.isLast()){
+            while (!resultSet.isLast()) {
                 if (resultSet.next()) {
-                    Long questionAnswerId = Long.valueOf(resultSet.getInt("question_answer_id"));
-                    String questionContent = String.valueOf(resultSet.getString("question_content"));
+                    Long questionAnswerId = (long) resultSet.getInt("question_answer_id");
+                    String questionContent = resultSet.getString("question_content");
                     Date questionCreateTime = new Date(resultSet.getTimestamp("question_create_time").getTime());
                     String questionUserLogin = resultSet.getString("question_user_login");
-                    String answerContent = String.valueOf(resultSet.getString("answer_content"));
+                    String answerContent = resultSet.getString("answer_content");
                     Date answerCreateTime = new Date(resultSet.getTimestamp("answer_create_time").getTime());
                     String answerUserLogin = resultSet.getString("answer_user_login");
-
-                    System.out.println("questionContent: " + questionContent);
-                    QuestionAnswer questionAnswer = new QuestionAnswer(questionAnswerId, questionUserLogin,questionContent,
+                    QuestionAnswer questionAnswer = new QuestionAnswer(questionAnswerId, questionUserLogin, questionContent,
                             questionCreateTime, answerUserLogin, answerContent, answerCreateTime);
-                    questionAnswerList.add(questionAnswer);                        //??????????????????
-
-
+                    questionAnswerList.add(questionAnswer);
                 }
             }
-
-        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            ConnectionPoolImpl.getInstance().closeConnection(connection);
+            if (connection != null) {
+                ConnectionPoolImpl.getInstance().closeConnection(connection);
+            }
         }
         return questionAnswerList;
     }

@@ -16,6 +16,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Veronika Tsarova
+ */
 public class UserSpecificationInfoByLogin implements Specification<User> {
     private static Logger logger = LogManager.getLogger();
 
@@ -29,31 +32,29 @@ public class UserSpecificationInfoByLogin implements Specification<User> {
 
     @Override
     public List<User> execute() throws RepositoryException {
-        String sql = SQLQuery.INFO_BY_LOGIN;
-        User user = null;
+        final String SQL_INFO_BY_LOGIN = SQLQuery.INFO_BY_LOGIN;
+        final String SQL_USER_CONTENT = SQLQuery.DEFINE_USER_CONTENT;
 
+        User user;
         Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSetUser = null;
+        PreparedStatement statement;
+        ResultSet resultSetUser;
 
         try {
             connection = ConnectionPoolImpl.getInstance().getConnection();
-
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(SQL_INFO_BY_LOGIN);
             statement.setString(1, desiredLogin);
             resultSetUser = statement.executeQuery();
             if (resultSetUser.next()) {
                 user = new User();
                 user.setLogin(resultSetUser.getString("login"));
                 user.setEmail(resultSetUser.getString("email"));
-                user.setUserId(Long.valueOf(resultSetUser.getString("user_id")));
+                user.setUserId((long) resultSetUser.getInt("user_id"));
 
+                PreparedStatement statementUserContent;
+                ResultSet resultSetUserContent;
 
-                PreparedStatement statementUserContent = null;
-                ResultSet resultSetUserContent = null;
-                String sqlUserContent = SQLQuery.DEFINE_USER_CONTENT;
-
-                statementUserContent = connection.prepareStatement(sqlUserContent);
+                statementUserContent = connection.prepareStatement(SQL_USER_CONTENT);
                 statementUserContent.setString(1, String.valueOf(user.getUserId()));
                 resultSetUserContent = statementUserContent.executeQuery();
 
@@ -61,11 +62,9 @@ public class UserSpecificationInfoByLogin implements Specification<User> {
                     UserContent userContent = new UserContent(resultSetUserContent.getString("first_name"),
                             resultSetUserContent.getString("last_name"),
                             resultSetUserContent.getString("telephone"));
-
                     if (resultSetUserContent.getString("birthday") != null) {
                         userContent.setBirthday(Date.valueOf(resultSetUserContent.getString("birthday")));
                     }
-
                     if (resultSetUserContent.getString("sex") != null) {
                         userContent.setSex(UserSex.valueOf(resultSetUserContent.getString("sex").toUpperCase()));
                     }
@@ -73,19 +72,14 @@ public class UserSpecificationInfoByLogin implements Specification<User> {
                 }
                 userList.add(user);
             }
-
-
-        } catch (SQLException | NullPointerException |
-                ConnectionPoolException e)
-
-        {
+        } catch (SQLException | ConnectionPoolException e) {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
-        } finally
-
-        {
-            ConnectionPoolImpl.getInstance().closeConnection(connection);
+        } finally {
+            if (connection != null) {
+                ConnectionPoolImpl.getInstance().closeConnection(connection);
+            }
         }
-        return userList;        //????????????????    }
+        return userList;
     }
 }
