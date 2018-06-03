@@ -60,7 +60,6 @@
     <fmt:message bundle="${local}" key="message.expertPanelHead" var="expertPanel" />
 </head>
 <body>
-${sessionScope.language}
 <nav id="menu">
     <ul>
         <li>
