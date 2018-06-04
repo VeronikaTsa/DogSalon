@@ -23,7 +23,7 @@
         }
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -40,10 +40,10 @@
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <div style="margin-left: 650px">
-<Input type="button" class="submit-link" onclick="location.href='/jsp/admin/signUpExpert.jsp'" value="${signupExpert}" />${signUpExpertSuccess}
+<Input type="button" class="submit-link" onclick="location.href='/jsp/admin/signUpExpert.jsp'" value="${signupExpert}" />
 <br>
 <br>
-<Input type="button" class="submit-link" onclick="location.href='/jsp/admin/serviceAdd.jsp'" value="${addService}" />${serviceAddSuccess}
+<Input type="button" class="submit-link" onclick="location.href='/jsp/admin/serviceAdd.jsp'" value="${addService}" />
 </div>
 </body>
 </html>

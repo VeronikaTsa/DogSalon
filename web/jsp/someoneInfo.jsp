@@ -24,7 +24,7 @@
     <fmt:message bundle="${local}" key="message.birthday" var="birthday"/>
     <fmt:message bundle="${local}" key="message.sex" var="sex"/>
     <title>${sessionScope.someone.login}</title>
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <style>
         .user-info p {
             margin-top: 20px;

@@ -46,7 +46,7 @@
         </c:otherwise>
     </c:choose>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <title>${addAnswer}</title>
     <style>
         a.user {
@@ -63,7 +63,7 @@
 <body>
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
-<a href="/ServletController?command=userInfo&userLogin=${param.questionAuthor}"
+<a href="<c:url value="/ServletController?command=userInfo&userLogin=${param.questionAuthor}"/>"
    class="user">
     <c:out value="${param.questionAuthor}"/>
 </a>
@@ -78,7 +78,7 @@ ${param.questionCreateTime}
 <br>
 <br>
 
-<form action="/ServletController" method="post">
+<form action="<c:url value="/ServletController"/>" method="post">
     <Input type="Text" name="answer" value="${answerContent}" width="100px" height="50px"/>
     <input type="hidden" name="questionId" value="${questionId}" />
     <Input type="submit" class="submit-link" value="${addAnswer}"/>

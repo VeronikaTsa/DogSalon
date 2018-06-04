@@ -35,7 +35,7 @@
 <body>
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
-<form action="/ServletController" method="post">
+<form action="<c:url value="/ServletController"/>" method="post">
     <Input type="Text" name="feedback" value="" width="100px" height="50px"/>
     <Input type="submit" class="submit-link" value="${addFeedback}"/>
     <input type="hidden" name="command" value="feedbackAdd" />

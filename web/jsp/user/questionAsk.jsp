@@ -32,13 +32,13 @@
     <fmt:message bundle="${local}" key="message.ask" var="ask" />
     <fmt:message bundle="${local}" key="message.askExpert" var="askExpert" />
 
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <title>${askExpert}</title>
 </head>
 <body>
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
-<form action="/ServletController" method="post" charset="UTF-8">
+<form action="<c:url value="/ServletController"/>" method="post" charset="UTF-8">
     <Input type="Text" name="question" value="" width="100px" height="50px"/>
     <Input type="submit" class="submit-link" value="${ask}"/>
     <input type="hidden" name="command" value="questionAsk" />

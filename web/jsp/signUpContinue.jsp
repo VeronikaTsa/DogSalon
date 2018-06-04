@@ -38,7 +38,7 @@
 <jsp:include page="../WEB-INF/jspf/head.jsp"/>
 <jsp:include page="../WEB-INF/jspf/logo.jsp"/>
 <div style="margin-left: 300px">
-<form action="/ServletController" method="post" charset="UTF-8">
+<form action="<c:url value="/ServletController"/>" method="post" charset="UTF-8">
     ${signUpContinue} <Input type="Text" name="codeToCompare" value=""/>
     <Input type="submit" class="submit-link" value="${send}"/>
     <input type="hidden" name="command" value="signupContinue" />

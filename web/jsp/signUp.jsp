@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <style>
         .submit-link {
             background:none!important;
@@ -42,7 +42,7 @@
 
 ${messageSendSuccess}
 <div style="margin-left: 600px">
-<form action="/ServletController" method="post" charset="UTF-8">
+<form action="<c:url value="/ServletController"/>" method="post" charset="UTF-8">
     ${enterEmail}:     <Input type="Text" name="email" value=""/>${requestScope.map.email}
     <br>
     <br>

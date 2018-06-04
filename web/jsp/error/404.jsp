@@ -79,7 +79,7 @@
             <br>
             - Что ты ко мне пристал? - рассердился Медвежонок. - Если тебя нет, то и меня нет. Понял?
             </p>
-        <p><a href="/index.jsp" class="beginning">${startAgain}</a></p>
+        <p><a href="<c:url value="/index.jsp"/>" class="beginning">${startAgain}</a></p>
     </div>
 </div>
 

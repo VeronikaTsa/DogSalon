@@ -21,7 +21,7 @@
     <fmt:message bundle="${local}" key="message.edit" var="edit"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Title</title>
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <style>
         a.user {
             color:#222;
@@ -41,7 +41,7 @@
 <c:if test="${not empty list}">
     <c:forEach items="${list}" var="element">
 <div style="margin-left: 650px">
-        <a class="feedback__author" href="/ServletController?command=userInfo&userLogin=${element.questionUserLogin}"
+        <a class="feedback__author" href="<c:url value="/ServletController?command=userInfo&userLogin=${element.questionUserLogin}"/>"
            class="user">
                 <c:out value="${element.questionUserLogin}"/>
         </a>
@@ -52,7 +52,7 @@
         <br>
         <br>
         <br>
-        <a class="feedback__author" href="/ServletController?command=userInfo&userLogin=${element.answerUserLogin}"
+        <a class="feedback__author" href="<c:url value="/ServletController?command=userInfo&userLogin=${element.answerUserLogin}"/>"
            class="user">
                 <c:out value="${element.answerUserLogin}"/>
         </a>

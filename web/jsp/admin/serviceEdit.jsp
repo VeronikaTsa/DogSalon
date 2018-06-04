@@ -48,7 +48,7 @@
             text-decoration:none;
         }
     </style>
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <style>
         .no-spinners {
             -moz-appearance:textfield;
@@ -65,7 +65,7 @@
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <div id="wrapper">
     <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
-    <form action="/ServletUploader" enctype = "multipart/form-data" method="post">
+    <form action="<c:url value="/ServletUploader"/>" enctype = "multipart/form-data" method="post">
     <div class="permalink-post">
         <div class="permalink-image_post">
             <div class="permalink-caption_post">

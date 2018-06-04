@@ -27,7 +27,7 @@
     <c:forEach items="${list}" var="element">
         <div class="post">
             <div class="image_post">
-                <a href="/jsp/service/serviceInfo.jsp?id=${element.id}&name=${element.name}&content=${element.content}&price=${element.price}&picture=${element.picture}">
+                <a href="<c:url value="/jsp/service/serviceInfo.jsp?id=${element.id}&name=${element.name}&content=${element.content}&price=${element.price}&picture=${element.picture}"/>">
                     <img src="/resource/img/service/${element.picture}">
                 </a>
             </div>
@@ -35,7 +35,7 @@
                     <div class="index-caption">
                         <p>
                             <span>
-                                <a href="/jsp/service/serviceInfo.jsp?id=${element.id}&name=${element.name}&content=${element.content}&price=${element.price}&picture=${element.picture}">${element.name}<br></a>
+                                <a href="<c:url value="/jsp/service/serviceInfo.jsp?id=${element.id}&name=${element.name}&content=${element.content}&price=${element.price}&picture=${element.picture}"/>">${element.name}<br></a>
                             </span>
                         </p>
                     </div>
@@ -44,7 +44,7 @@
                         <div class="index-caption">
                             <p>
                             <span>
-                                <a href="/ServletController?id=${element.id}&command=serviceDelete">${delete}<br></a>
+                                <a href="<c:url value="/ServletController?id=${element.id}&command=serviceDelete"/>">${delete}<br></a>
                             </span>
                             </p>
                         </div>

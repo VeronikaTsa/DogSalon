@@ -103,7 +103,7 @@
                 </li>
             </c:otherwise>
         </c:choose>
-        </li>
+
         <li>
             <c:choose>
                 <c:when test="${sessionScope.language.equals('ru_RU')}">

@@ -12,7 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <title>Title</title>
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <style>
         a.user {
@@ -39,7 +39,7 @@ ${requestScope.feedbackDelSuccess}
     <c:forEach items="${list}" var="element">
         <div class="feedback">
             <div class="feedback-top">
-                <a class="feedback__author" href="/ServletController?command=userInfo&userLogin=${element.userLogin}"
+                <a class="feedback__author" href="<c:url value="/ServletController?command=userInfo&userLogin=${element.userLogin}"/>"
                    class="user"><c:out value="${element.userLogin}"/></a>
                 <span class="feedback__date">${element.createTime}</span>
             </div>
@@ -47,7 +47,7 @@ ${requestScope.feedbackDelSuccess}
                 <c:out value="${element.content}"/>
             </div>
             <c:if test="${sessionScope.user.role.getValue().equals('administrator')}">
-                <a class="feedback__btn-delete" href="/ServletController?id=${element.id}&command=feedbackDelete">
+                <a class="feedback__btn-delete" href="<c:url value="/ServletController?id=${element.id}&command=feedbackDelete"/>">
                     <i class="far fa-trash-alt"></i>
                 </a>
             </c:if>

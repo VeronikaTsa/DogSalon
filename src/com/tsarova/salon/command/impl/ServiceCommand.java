@@ -30,7 +30,6 @@ public class ServiceCommand implements Command {
             logger.catching(Level.ERROR, e);
             throw new CommandException();
         }
-        logger.log(Level.DEBUG, serviceList);
         requestContent.setAttribute("serviceList", serviceList);
 
         return commandContent;

@@ -54,7 +54,7 @@
             <br>— Винни, ведь это же твой дом.
             <br>— Да? А, ну да.
         </p>
-        <p><a href="/index.jsp" class="beginning">${startAgain}</a></p>
+        <p><a href="<c:url value="/index.jsp"/>" class="beginning">${startAgain}</a></p>
     </div>
 </div>
 

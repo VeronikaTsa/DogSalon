@@ -12,19 +12,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/css/cc.css">
-    <style>
-        a.user {
-            color:#222;
-            text-decoration: none; /* Отменяем подчеркивание у ссылки */
-            display:block;
-            font-size:18px;
-        }
-        a.user:hover {
-            color:#d64431; /* Цвет ссылок при наведении на них курсора мыши */
-        }
-
-    </style>
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <style>
         .submit-link {
             background:none!important;

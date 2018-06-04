@@ -10,7 +10,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>${signUpExpert}</title>
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -21,6 +20,7 @@
     <fmt:message bundle="${local}" key="message.signUp" var="signUp"/>
     <fmt:message bundle="${local}" key="message.enterEmail" var="enterEmail"/>
     <fmt:message bundle="${local}" key="message.enterLogin" var="enterLogin"/>
+    <title>${signUpExpert}</title>
     <style>
         .submit-link {
             background:none!important;
@@ -34,14 +34,14 @@
         }
     </style>
 
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
 </head>
 <body>
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 
 <div style="margin-left: 600px">
-<form action="/ServletController" method="post" charset="UTF-8">
+<form action="<c:url value="/ServletController"/>" method="post" charset="UTF-8">
     ${enterEmail} <Input type="Text" name="email" value=""/>
     <br>
     <br>

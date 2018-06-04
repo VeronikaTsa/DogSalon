@@ -40,7 +40,7 @@
     <div style="margin-left: 600px">
         <c:forEach items="${list}" var="element">
             <br><br>
-            <a href="/ServletController?command=userInfo&userLogin=${element.userLogin}"
+            <a href="<c:url value="/ServletController?command=userInfo&userLogin=${element.userLogin}"/>"
                class="user">
                 <c:out value="${element.userLogin}"/>
             </a>
@@ -53,7 +53,7 @@
 
             <br>
             <c:if test="${sessionScope.user.role.getValue().equals('expert')}">
-                <form action="/ServletController" method="post">
+                <form action="<c:url value="/ServletController"/>" method="post">
                     <input type="hidden" name="id" value="${element.id}"/>
                     <Input type="submit" class="submit-link" value="${delete}"/>
                     <input type="hidden" name="command" value="questionDelete" />

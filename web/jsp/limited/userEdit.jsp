@@ -56,7 +56,7 @@
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <div class="user-info-wrap">
     <div class="user-info">
-        <form action="/ServletController" method="post">
+        <form action="<c:url value="/ServletController"/>" method="post">
             <input type="hidden" name="command" value="userUpdate">
             <input class="submit-link" type="submit" value="${edit}">
             <p>${email}: <Input type="Text" name="emailToEdit" value="<c:out value="${sessionScope.user.email}"/>"/></p>

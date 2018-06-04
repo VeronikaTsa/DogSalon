@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -50,7 +50,7 @@
 <body>
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
-<form action="/ServletController" method="post" charset="UTF-8">
+<form action="<c:url value="/ServletController"/>" method="post" charset="UTF-8">
     ${enterServiceName}: <Input type="Text" name="name" value=""/>${requestScope.map.name}
     <br>
     <br>

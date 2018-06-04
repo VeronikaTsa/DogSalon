@@ -23,7 +23,7 @@
         }
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/css/cc.css">
+    <link rel="stylesheet" href="<c:url value="/css/cc.css"/>">
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -38,7 +38,7 @@
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <div style="margin-left: 650px">
-    <form action="/jsp/expert/questionNotAnswered.jsp" method="post">
+    <form action="<c:url value="/jsp/expert/questionNotAnswered.jsp"/>" method="post">
         <Input type="submit" class="submit-link" value="${questionNotAnswered}"/>
     </form>
 </div>
