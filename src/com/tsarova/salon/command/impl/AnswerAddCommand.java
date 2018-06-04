@@ -18,6 +18,15 @@ import org.apache.logging.log4j.Logger;
 public class AnswerAddCommand implements Command {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * This method takes parameters from received {@param requestContent}, then
+     * in case of successful adding an answer redirects to page with not answered questions.
+     *
+     * @param requestContent
+     * @return <tt>CommandContent</tt> which contains next page path and type of response
+     * @throws CommandException
+     * @see com.tsarova.salon.content.CommandContent
+     */
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {
         final String ANSWER_ADD_PAGE = PageResourceManager.getInstance().getValue("jsp.answerAdd");

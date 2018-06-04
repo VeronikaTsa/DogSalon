@@ -22,6 +22,16 @@ import java.util.List;
 public class AnswerRepository implements Repository<Answer> {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * This method tries to add received {@param answer} to database.
+     * It creates connection and fills <tt>PreparedStatement</tt> with
+     * {@param answer} fields. Finally it closes connection.
+     *
+     * @param answer
+     * @return <tt>boolean</tt> that means if answer added or not
+     * @throws RepositoryException
+     * @see java.sql.PreparedStatement
+     */
     @Override
     public boolean add(Answer answer) throws RepositoryException {
         final String SQL_REPLACE_ANSWER = SQLQuery.REPLACE_ANSWER;
@@ -46,6 +56,16 @@ public class AnswerRepository implements Repository<Answer> {
         return false;
     }
 
+    /**
+     * This method tries to remove received {@param answer} to database.
+     * It creates connection and fills <tt>PreparedStatement</tt> with
+     * {@param answer} id. Finally it closes connection.
+     *
+     * @param answer
+     * @return <tt>boolean</tt> that means if answer removed or not
+     * @throws RepositoryException
+     * @see java.sql.PreparedStatement
+     */
     @Override
     public boolean remove(Answer answer) throws RepositoryException {
         final String SQL_DELETE_ANSWER = SQLQuery.DELETE_ANSWER;

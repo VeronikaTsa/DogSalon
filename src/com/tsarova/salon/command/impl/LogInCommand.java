@@ -20,6 +20,17 @@ import java.util.Optional;
 public class LogInCommand implements Command {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * This method takes parameters from received {@param requestContent}, then
+     * tries to define user with received email and password.
+     * <p>If user exists, method redirects to index page, otherwise - forwards
+     * to login page again.</p>
+     *
+     * @param requestContent
+     * @return <tt>CommandContent</tt> which contains next page path and type of response
+     * @throws CommandException
+     * @see com.tsarova.salon.content.CommandContent
+     */
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {
         final String LOGIN_PAGE = PageResourceManager.getInstance().getValue("jsp.logIn");
