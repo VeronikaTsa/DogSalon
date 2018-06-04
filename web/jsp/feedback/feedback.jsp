@@ -25,6 +25,18 @@
         }
 
     </style>
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
 
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
@@ -47,7 +59,7 @@
 <c:set var="user" value="${sessionScope.user}"/>
 <c:if test="${not empty user}">
     <c:if test="${sessionScope.user.role.getValue().equals('user')}">
-        <Input style="margin-left: 700px" type="button" onclick="location.href='/jsp/user/feedbackAdd.jsp'" value="${addFeedback}" />
+        <Input style="margin-left: 700px" class="submit-link" type="button" onclick="location.href='/jsp/user/feedbackAdd.jsp'" value="${addFeedback}" />
         <br>
     </c:if>
 </c:if>
@@ -55,9 +67,6 @@
 <jsp:include page="/ServletController" flush="true">
     <jsp:param name="command" value="feedback" />
 </jsp:include>
-
-<br>
-<br>
 <br>
 <br>
 </body>

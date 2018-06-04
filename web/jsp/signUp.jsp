@@ -11,7 +11,18 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/cc.css">
-
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -44,7 +55,7 @@ ${messageSendSuccess}
     ${repeatPassword}: <input type="password" name ="passwordRepeat" value=""/>${requestScope.map.passwordRepeat}
     <br>
     <br>
-    <Input type="submit" value="${signUp}"/>
+    <Input type="submit" class="submit-link" value="${signUp}"/>
     <input type="hidden" name="command" value="signup" />
     <br>
     <br>

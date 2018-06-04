@@ -21,7 +21,18 @@
     <fmt:message bundle="${local}" key="message.signUp" var="signUp"/>
     <fmt:message bundle="${local}" key="message.enterEmail" var="enterEmail"/>
     <fmt:message bundle="${local}" key="message.enterLogin" var="enterLogin"/>
-
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
 
     <link rel="stylesheet" href="/css/cc.css">
 </head>
@@ -38,7 +49,7 @@
     <br>
     <br>
 
-    <Input type="submit" value="${signUp}"/>
+    <Input type="submit" class="submit-link" value="${signUp}"/>
     <input type="hidden" name="command" value="signupexpert" />
     <br>
     <br>

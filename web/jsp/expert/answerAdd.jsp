@@ -10,6 +10,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <html>
 <head>
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -69,7 +81,7 @@ ${param.questionCreateTime}
 <form action="/ServletController" method="post">
     <Input type="Text" name="answer" value="${answerContent}" width="100px" height="50px"/>
     <input type="hidden" name="questionId" value="${questionId}" />
-    <Input type="submit" value="${addAnswer}"/>
+    <Input type="submit" class="submit-link" value="${addAnswer}"/>
     <input type="hidden" name="command" value="answerAdd" />
 </form>
 

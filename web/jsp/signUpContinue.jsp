@@ -10,6 +10,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -20,7 +32,6 @@
     <fmt:message bundle="${local}" key="message.signUp" var="signUp"/>
     <fmt:message bundle="${local}" key="message.send" var="send"/>
 
-
     <title>${signUp}</title>
 </head>
 <body>
@@ -29,7 +40,7 @@
 <div style="margin-left: 300px">
 <form action="/ServletController" method="post" charset="UTF-8">
     ${signUpContinue} <Input type="Text" name="codeToCompare" value=""/>
-    <Input type="submit" value="${send}"/>
+    <Input type="submit" class="submit-link" value="${send}"/>
     <input type="hidden" name="command" value="signupContinue" />
     <br>
     <br>

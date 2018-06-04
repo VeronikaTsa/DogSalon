@@ -11,6 +11,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -43,7 +55,7 @@
             <c:if test="${sessionScope.user.role.getValue().equals('expert')}">
                 <form action="/ServletController" method="post">
                     <input type="hidden" name="id" value="${element.id}"/>
-                    <Input type="submit" value="${delete}"/>
+                    <Input type="submit" class="submit-link" value="${delete}"/>
                     <input type="hidden" name="command" value="questionDelete" />
                 </form>
                 <a class="link" href="<c:url value="/jsp/expert/answerAdd.jsp?questionContent=${element.content}&questionCreateTime=${element.createTime}&questionAuthor=${element.userLogin}&questionId=${element.id}"/>">${addAnswer}</a>

@@ -25,6 +25,18 @@
     <title>${questions}</title>
     <link rel="stylesheet" href="/css/cc.css">
     <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
+    <style>
         a.user {
             color:#222;
             text-decoration: none; /* Отменяем подчеркивание у ссылки */
@@ -43,7 +55,7 @@
 
 <c:if test="${not empty user}">
     <c:if test="${sessionScope.user.role.getValue().equals('user')}">
-        <Input type="button" onclick="location.href='/jsp/user/questionAsk.jsp'" value="${askExpert}" />
+        <Input style="margin-left: 700px" type="button" class="submit-link" onclick="location.href='/jsp/user/questionAsk.jsp'" value="${askExpert}" /><br><br>
     </c:if>
 
 </c:if>
@@ -52,9 +64,6 @@
 <jsp:include page="/ServletController" flush="true">
     <jsp:param name="command" value="questionAnswer" />
 </jsp:include>
-
-
-
 
 </body>
 </html>

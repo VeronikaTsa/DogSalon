@@ -34,6 +34,18 @@
             margin: 0;
         }
     </style>
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../../WEB-INF/jspf/head.jsp"/>
@@ -51,7 +63,7 @@
 
 
     <br>
-    <Input type="submit" value="${addService}"/>
+    <Input type="submit" class="submit-link" value="${addService}"/>
     <input type="hidden" name="command" value="serviceadd" />
     <br>
     <br>

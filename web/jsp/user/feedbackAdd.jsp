@@ -10,6 +10,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <head>
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
     <c:if test = "${empty sessionScope.language}">
         <c:set var="language" value='en_US' scope="session"/>
     </c:if>
@@ -25,7 +37,7 @@
 <jsp:include page="../../WEB-INF/jspf/logo.jsp"/>
 <form action="/ServletController" method="post">
     <Input type="Text" name="feedback" value="" width="100px" height="50px"/>
-    <Input type="submit" value="${addFeedback}"/>
+    <Input type="submit" class="submit-link" value="${addFeedback}"/>
     <input type="hidden" name="command" value="feedbackAdd" />
 </form>
 

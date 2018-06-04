@@ -11,7 +11,6 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
     <c:choose>
         <c:when test="${not empty param.id}">
             <c:set value="${param.picture}" var="picture"/>
@@ -37,7 +36,18 @@
     <fmt:message bundle="${local}" key="message.edit" var="edit" />
     <fmt:message bundle="${local}" key="message.chooseFile" var="chooseFile" />
 
-
+    <style>
+        .submit-link {
+            background:none!important;
+            color:inherit;
+            border:none;
+            font: inherit;
+            padding:0!important;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            text-decoration:none;
+        }
+    </style>
     <link rel="stylesheet" href="/css/cc.css">
     <style>
         .no-spinners {
@@ -77,8 +87,8 @@
         </div>
     </div>
         <c:if test="${sessionScope.user.role.getValue().equals('administrator')}">
-            ${chooseFile}:<INPUT type="file" name="picture">${requestScope.map.picture}
-            <Input type="submit" value="${edit}">
+            <INPUT style="margin-left: 500px" type="file" name="picture">${requestScope.map.picture}<br><br><br>
+            <Input type="submit" style="margin-left: 590px" class="submit-link" value="${edit}">
             <input type="hidden" name="command" value="serviceUpdate" />
             <input type="hidden" name="serviceId" value="${id}" />
             <input type="hidden" name="pictureName" value="${picture}" />
