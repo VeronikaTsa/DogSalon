@@ -52,9 +52,7 @@ public class UserRepository implements Repository<User> {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException();
         } finally {
-            if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
-            }
         }
         return false;
     }
@@ -118,9 +116,7 @@ public class UserRepository implements Repository<User> {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
-            }
         }
         return false;
     }
@@ -175,9 +171,7 @@ public class UserRepository implements Repository<User> {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
-            }
         }
         return null;
     }

@@ -1,7 +1,6 @@
 package com.tsarova.salon.repository.impl;
 
-import com.tsarova.salon.conpool.ConnectionPool;
-import com.tsarova.salon.conpool.ProxyConnection;
+import com.tsarova.salon.pool.ConnectionPool;
 import com.tsarova.salon.entity.Feedback;
 import com.tsarova.salon.exception.ConnectionPoolException;
 import com.tsarova.salon.exception.RepositoryException;
@@ -25,7 +24,7 @@ public class FeedbackRepository implements Repository<Feedback> {
     @Override
     public boolean add(Feedback feedback) throws RepositoryException {
         final String SQL_ADD_FEEDBACK = SQLQuery.ADD_FEEDBACK;
-        ProxyConnection connection = null;
+        Connection connection = null;
         PreparedStatement statement;
 
         try {
@@ -40,9 +39,7 @@ public class FeedbackRepository implements Repository<Feedback> {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().returnConnection(connection);
-            }
+            ConnectionPool.getInstance().closeConnection(connection);
         }
         return false;
     }
@@ -50,7 +47,7 @@ public class FeedbackRepository implements Repository<Feedback> {
     @Override
     public boolean remove(Feedback feedback) throws RepositoryException {
         final String SQL_DELETE_FEEDBACK = SQLQuery.DELETE_FEEDBACK;
-        ProxyConnection connection = null;
+        Connection connection = null;
         PreparedStatement statement;
 
         try {
@@ -64,9 +61,7 @@ public class FeedbackRepository implements Repository<Feedback> {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().returnConnection(connection);
-            }
+                ConnectionPool.getInstance().closeConnection(connection);
         }
         return false;
     }
@@ -85,7 +80,7 @@ public class FeedbackRepository implements Repository<Feedback> {
     public List<Feedback> findAll() throws RepositoryException {
         final String SQL_FIND_ALL_FEEDBACKS = SQLQuery.FIND_FEEDBACKS;
         List<Feedback> feedbackList = new ArrayList<>();
-        ProxyConnection connection = null;
+        Connection connection = null;
         PreparedStatement statement;
         ResultSet resultSet;
 
@@ -106,9 +101,7 @@ public class FeedbackRepository implements Repository<Feedback> {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            if (connection != null) {
-                ConnectionPool.getInstance().returnConnection(connection);
-            }
+                ConnectionPool.getInstance().closeConnection(connection);
         }
         return feedbackList;
     }

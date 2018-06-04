@@ -71,9 +71,7 @@ public class QuestionAnswerRepository implements Repository<QuestionAnswer> {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
-            }
         }
         return questionAnswerList;
     }

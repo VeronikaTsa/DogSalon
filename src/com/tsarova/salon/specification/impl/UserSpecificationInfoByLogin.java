@@ -76,9 +76,7 @@ public class UserSpecificationInfoByLogin implements Specification<User> {
             logger.catching(Level.ERROR, e);
             throw new RepositoryException(e);
         } finally {
-            if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
-            }
         }
         return userList;
     }

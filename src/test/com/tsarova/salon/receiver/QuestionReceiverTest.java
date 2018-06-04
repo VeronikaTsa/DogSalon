@@ -48,7 +48,7 @@ public class QuestionReceiverTest {
     @Test
     public void removeAnswerTestPositive() {
         Long lastInsertId;
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statementAddQuestion, statementLastId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -66,6 +66,8 @@ public class QuestionReceiverTest {
             }
         } catch (ConnectionPoolException | SQLException | ReceiverException e) {
             logger.catching(Level.ERROR, e);
+        } finally {
+            ConnectionPool.getInstance().closeConnection(connection);
         }
     }
 

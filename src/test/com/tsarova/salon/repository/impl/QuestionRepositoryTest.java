@@ -49,7 +49,7 @@ public class QuestionRepositoryTest {
 
     @Test(priority = 2)
     public void removeTestPositive() {
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statementAddQuestion, statementLastId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -65,6 +65,8 @@ public class QuestionRepositoryTest {
             }
         } catch (ConnectionPoolException | SQLException e) {
             logger.catching(Level.ERROR, e);
+        } finally {
+            ConnectionPool.getInstance().closeConnection(connection);
         }
         try {
             Assert.assertTrue(questionRepository.remove(question), "Question wasn't removed");

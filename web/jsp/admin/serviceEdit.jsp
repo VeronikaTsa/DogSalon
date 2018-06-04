@@ -35,6 +35,8 @@
     <fmt:setLocale value="${language}" />
     <fmt:setBundle basename="text" var="local"/>
     <fmt:message bundle="${local}" key="message.edit" var="edit" />
+    <fmt:message bundle="${local}" key="message.chooseFile" var="chooseFile" />
+
 
     <link rel="stylesheet" href="/css/cc.css">
     <style>
@@ -75,7 +77,7 @@
         </div>
     </div>
         <c:if test="${sessionScope.user.role.getValue().equals('administrator')}">
-            Выберите файл:<INPUT type="file" name="picture">${requestScope.map.picture}
+            ${chooseFile}:<INPUT type="file" name="picture">${requestScope.map.picture}
             <Input type="submit" value="${edit}">
             <input type="hidden" name="command" value="serviceUpdate" />
             <input type="hidden" name="serviceId" value="${id}" />

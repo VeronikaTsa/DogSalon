@@ -6,7 +6,6 @@ import com.tsarova.salon.command.Command;
 import com.tsarova.salon.command.CommandEnum;
 import com.tsarova.salon.content.CommandContent;
 import com.tsarova.salon.content.RequestContent;
-import com.tsarova.salon.entity.User;
 import com.tsarova.salon.exception.CommandException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

@@ -1,17 +1,33 @@
-package com.tsarova.salon.conpool;
+package com.tsarova.salon.pool;
 
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public class ProxyConnection implements Connection {
+/**
+ * @author Veronika Tsarova
+ */
+class ProxyConnection implements Connection {
 
     private Connection connection;
 
-    public ProxyConnection(Connection connection) throws SQLException {
+    ProxyConnection(Connection connection) throws SQLException {
         this.connection = connection;
         this.connection.setAutoCommit(true);
+    }
+
+    @Override
+    public void close() throws SQLException {
+        if (connection.isClosed()) {
+            throw new SQLException("Attempting to close closed connection");
+        }
+
+        if (connection.isReadOnly()) {
+            connection.setReadOnly(false);
+        }
+
+        ConnectionPool.getInstance().returnConnection(connection);
     }
 
     @Override
@@ -52,11 +68,6 @@ public class ProxyConnection implements Connection {
     @Override
     public void rollback() throws SQLException {
         connection.rollback();
-    }
-
-    @Override
-    public void close() throws SQLException {
-        connection.close();
     }
 
     @Override

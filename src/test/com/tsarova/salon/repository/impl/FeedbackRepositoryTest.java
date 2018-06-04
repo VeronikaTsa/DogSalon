@@ -49,7 +49,7 @@ public class FeedbackRepositoryTest {
 
     @Test(priority = 2)
     public void removeTestPositive() {
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statementAddService, statementLastId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -65,6 +65,8 @@ public class FeedbackRepositoryTest {
             }
         } catch (ConnectionPoolException | SQLException e) {
             logger.catching(Level.ERROR, e);
+        } finally {
+            ConnectionPool.getInstance().closeConnection(connection);
         }
         try {
             Assert.assertTrue(feedbackRepository.remove(feedback), "Feedback wasn't removed");

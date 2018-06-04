@@ -49,7 +49,7 @@ public class ServiceRepositoryTest {
 
     @Test(priority = 2)
     public void updateTestPositive() {
-        Connection connection;
+        Connection connection = null;
         PreparedStatement statementAddService, statementLastId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -66,6 +66,8 @@ public class ServiceRepositoryTest {
             }
         } catch (ConnectionPoolException | SQLException e) {
             logger.catching(Level.ERROR, e);
+        } finally {
+            ConnectionPool.getInstance().closeConnection(connection);
         }
         service.setContent("Updated content");
         try {
