@@ -21,10 +21,11 @@ public class AnswerDeleteCommand implements Command {
      * This method takes parameters from received {@param requestContent}, then
      * in case of successful deleting an answer redirects to page with answered questions.
      *
-     * @param requestContent
-     * @return <tt>CommandContent</tt> which contains next page path and type of response
-     * @throws CommandException
+     * @param requestContent contains parameters and attributes from request
+     * @return {@code CommandContent} which contains next page path and type of response
+     * @throws CommandException when receives {@code ReceiverException}
      * @see com.tsarova.salon.content.CommandContent
+     * @see com.tsarova.salon.exception.ReceiverException
      */
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {

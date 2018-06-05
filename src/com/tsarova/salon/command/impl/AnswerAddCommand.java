@@ -13,7 +13,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * The class {@code AnswerAddCommand} implements
+ * {@code Command} that indicates different reactions to {@code ServletController}
+ * or {@code ServletUploader} request.
+ *
+ * <p>The class {@code AnswerAddCommand} decides how response should look like.
+ *
  * @author Veronika Tsarova
+ * @see com.tsarova.salon.command.Command
  */
 public class AnswerAddCommand implements Command {
     private static Logger logger = LogManager.getLogger();
@@ -22,10 +29,11 @@ public class AnswerAddCommand implements Command {
      * This method takes parameters from received {@param requestContent}, then
      * in case of successful adding an answer redirects to page with not answered questions.
      *
-     * @param requestContent
-     * @return <tt>CommandContent</tt> which contains next page path and type of response
-     * @throws CommandException
+     * @param requestContent contains parameters and attributes from request
+     * @return {@code CommandContent} which contains next page path and type of response
+     * @throws CommandException when receives {@code ReceiverException}
      * @see com.tsarova.salon.content.CommandContent
+     * @see com.tsarova.salon.exception.ReceiverException
      */
     @Override
     public CommandContent execute(RequestContent requestContent) throws CommandException {

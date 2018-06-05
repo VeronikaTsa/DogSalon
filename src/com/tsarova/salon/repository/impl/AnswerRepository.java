@@ -24,13 +24,16 @@ public class AnswerRepository implements Repository<Answer> {
 
     /**
      * This method tries to add received {@param answer} to database.
-     * It creates connection and fills <tt>PreparedStatement</tt> with
+     * It creates connection and fills {@code PreparedStatement} with
      * {@param answer} fields. Finally it closes connection.
      *
-     * @param answer
+     * @param answer corresponds to {@code Answer} object that is going to be added
      * @return <tt>boolean</tt> that means if answer added or not
-     * @throws RepositoryException
+     * @throws RepositoryException when receives {@code ConnectionPoolException} or {@code SQLException}
      * @see java.sql.PreparedStatement
+     * @see com.tsarova.salon.entity.Answer
+     * @see com.tsarova.salon.exception.ConnectionPoolException
+     * @see java.sql.SQLException
      */
     @Override
     public boolean add(Answer answer) throws RepositoryException {
@@ -58,13 +61,16 @@ public class AnswerRepository implements Repository<Answer> {
 
     /**
      * This method tries to remove received {@param answer} to database.
-     * It creates connection and fills <tt>PreparedStatement</tt> with
+     * It creates connection and fills {@code PreparedStatement} with
      * {@param answer} id. Finally it closes connection.
      *
-     * @param answer
+     * @param answer corresponds to {@code Answer} object that is going to be deleted
      * @return <tt>boolean</tt> that means if answer removed or not
-     * @throws RepositoryException
+     * @throws RepositoryException when receives {@code ConnectionPoolException} or {@code SQLException}
      * @see java.sql.PreparedStatement
+     * @see com.tsarova.salon.entity.Answer
+     * @see com.tsarova.salon.exception.ConnectionPoolException
+     * @see java.sql.SQLException
      */
     @Override
     public boolean remove(Answer answer) throws RepositoryException {
